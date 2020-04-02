@@ -68,7 +68,7 @@ pip install -r requirements.txt
 
 ### Training
 
-1.Pretrain Activity2Vec
+1.Pretrain Activity2Vec (now PaStaNet* is available, larger PaStaNet is coming soon)
 
 ```
 python tools/Train_pasta_HICO_DET.py --data <0 for PaStaNet*, 1 for PaStaNet> --init_weight 1 --train_module 2 --num_iteration 2000000 --model <your model name>
