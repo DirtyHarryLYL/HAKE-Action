@@ -1,0 +1,2923 @@
+name: "VGG_ILSVRC_16_layers"
+layer {
+  name: 'data'
+  type: 'Python'
+  top: 'data'
+  top: 'human_roi'
+  top: 'obj1_roi'
+  top: 'obj2_roi'
+  top: 'obj3_roi'
+  top: 'obj4_roi'
+  top: 'rel1_roi'
+  top: 'rel2_roi'
+  top: 'rel3_roi'
+  top: 'rel4_roi'
+  top: 'scene_roi'
+  top: 'label'
+  top: 'part_roi' #N = M people * K parts 
+  top: 'label_wts'
+  top: 'human_prior'
+  top: 'hp_list'
+  top: 'hp_list_wts'
+  ######################## pvp and wts
+  top: 'pvp_ankle2'
+  top: 'pvp_ankle2_wts'
+  top: 'pvp_knee2'
+  top: 'pvp_knee2_wts'
+  top: 'pvp_hip'
+  top: 'pvp_hip_wts'
+  top: 'pvp_hand2'
+  top: 'pvp_hand2_wts'
+  top: 'pvp_shoulder2'
+  top: 'pvp_shoulder2_wts'
+  top: 'pvp_head'
+  top: 'pvp_head_wts'
+  top: 'pvp_wts'
+  ########################117 verb and 80 object
+  top: 'verb_list'
+  top: 'verb_list_wts'
+  top: 'object_list'
+  top: 'object_list_wts'
+  ######################################
+  python_param {
+    module: 'HOI_data_layer-PaSta-Tree'
+    layer: 'HOIDataLayer'
+    param_str: '{"batch_size":1,"max_size":640, "root":"./data/hico/","list_file":"./data/hico/train_filelist.txt", "use_10v_inner_wts": True, "use_117_inner_wts": False, "use_pvp_inner_wts": False}'
+  }
+  include {
+    phase: TRAIN
+  }
+}
+
+
+layer {
+  name: 'data'
+  type: 'Python'
+  top: 'data'
+  top: 'human_roi'
+  top: 'obj1_roi'
+  top: 'obj2_roi'
+  top: 'obj3_roi'
+  top: 'obj4_roi'
+  top: 'rel1_roi'
+  top: 'rel2_roi'
+  top: 'rel3_roi'
+  top: 'rel4_roi'
+  top: 'scene_roi'
+  top: 'label'
+  top: 'part_roi'#N = M people * K parts 
+  top: 'label_wts'
+  top: 'human_prior'
+  top: 'hp_list'
+  top: 'hp_list_wts'
+  ######################## pvp and wts
+  top: 'pvp_ankle2'
+  top: 'pvp_ankle2_wts'
+  top: 'pvp_knee2'
+  top: 'pvp_knee2_wts'
+  top: 'pvp_hip'
+  top: 'pvp_hip_wts'
+  top: 'pvp_hand2'
+  top: 'pvp_hand2_wts'
+  top: 'pvp_shoulder2'
+  top: 'pvp_shoulder2_wts'
+  top: 'pvp_head'
+  top: 'pvp_head_wts'
+  top: 'pvp_wts'
+  ########################117 verb and 80 object
+  top: 'verb_list'
+  top: 'verb_list_wts'
+  top: 'object_list'
+  top: 'object_list_wts'
+  ######################################
+  python_param {
+    module: 'HOI_data_layer-PaSta-Tree'
+    layer: 'HOIDataLayer'
+    param_str: '{"batch_size":1,"max_size":640,"root":"./data/hico/","list_file":"./data/hico/test_filelist.txt", "use_10v_inner_wts": True, "use_117_inner_wts": False, "use_pvp_inner_wts": False}'
+  }
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "conv3_2"
+  top: "conv3_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3"
+}
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "conv4_3"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "conv4_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_3"
+  type: "ReLU"
+  bottom: "conv4_3"
+  top: "conv4_3"
+}
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom: "conv4_3"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv5_1"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "conv5_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_1"
+  type: "ReLU"
+  bottom: "conv5_1"
+  top: "conv5_1"
+}
+layer {
+  name: "conv5_2"
+  type: "Convolution"
+  bottom: "conv5_1"
+  top: "conv5_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_2"
+  type: "ReLU"
+  bottom: "conv5_2"
+  top: "conv5_2"
+}
+layer {
+  name: "conv5_3"
+  type: "Convolution"
+  bottom: "conv5_2"
+  top: "conv5_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_3"
+  type: "ReLU"
+  bottom: "conv5_3"
+  top: "conv5_3"
+}
+
+
+
+# Four reduction layers: dim_red_11 - dim_red_44
+
+layer {
+  name: "dim_red_11"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_11"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 45
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "dim_red_22"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_22"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 166
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "dim_red_33"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_33"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 166
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  name: "dim_red_55"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_55"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 45
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+# Layers based on dim_red_11
+layer {
+  name: "relroi1_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel1_roi"
+  top: "relroi1_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "relroi2_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel2_roi"
+  top: "relroi2_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "relroi3_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel3_roi"
+  top: "relroi3_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "relroi4_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel4_roi"
+  top: "relroi4_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+
+layer {
+  name: "humanroi_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_22"
+  bottom: "human_roi"
+  top: "humanroi_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "obj1_roi_s"
+  type: "Silence"
+  bottom: "obj1_roi"
+}
+layer {
+  name: "obj2_roi_s"
+  type: "Silence"
+  bottom: "obj2_roi"
+}
+layer {
+  name: "obj3_roi_s"
+  type: "Silence"
+  bottom: "obj3_roi"
+}
+layer {
+  name: "obj4_roi_s"
+  type: "Silence"
+  bottom: "obj4_roi"
+}
+layer {
+    name: "object_list_s"
+    type: "Silence"
+    bottom: "object_list"
+}
+layer{
+    name: "object_list_wts_s"
+    type: "Silence"
+    bottom: "object_list_wts"
+}
+layer{
+    name: "pvp_wts_s"
+    type: "Silence"
+    bottom: "pvp_wts"
+}
+
+layer {
+  name: "sceneroi_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_33"
+  bottom: "scene_roi"
+  top: "sceneroi_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+
+layer {
+  name: "slicer_roi"
+  type: "Slice"
+  bottom: "part_roi"
+  top: 'part_roi1'#RAnk
+  top: 'part_roi2'#RKne
+  top: 'part_roi3'#LKne
+  top: 'part_roi4'#LAnk
+  top: 'part_roi5'#Pelv
+  top: 'part_roi6'#Neck
+  top: 'part_roi7'#RWri
+  top: 'part_roi8'#RElb
+  top: 'part_roi9'#LElb
+  top: 'part_roi10'#LWri
+  slice_param {
+    axis: 0
+  }
+}
+
+#####################################part pooling
+layer {
+  name: "partroi1_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi1"
+  top: "partroi1_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi2_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi2"
+  top: "partroi2_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi3_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi3"
+  top: "partroi3_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi4_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi4"
+  top: "partroi4_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi5_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi5"
+  top: "partroi5_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi6_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi6"
+  top: "partroi6_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi1_pool7"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi7"
+  top: "partroi7_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi8_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi8"
+  top: "partroi8_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi9_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi9"
+  top: "partroi9_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi10_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi10"
+  top: "partroi10_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+
+layer {
+  name: "human_prior"
+  type: "Silence"
+  bottom: "human_prior"
+}
+############################# 6 pvp classifier
+###feet#################################################
+layer {
+  name: "feat_concat_feet"
+  type: "Concat"
+  bottom: "partroi1_pool5"
+  bottom: "partroi4_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "feet_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_feet"
+  type: "InnerProduct"
+  bottom: "feet_part_concat"
+  top: "fc6_feet"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_feet"
+  type: "ReLU"
+  bottom: "fc6_feet"
+  top: "fc6_feet"
+}
+layer {
+  name: "drop6_feet"
+  type: "Dropout"
+  bottom: "fc6_feet"
+  top: "fc6_feet"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_feet"
+  type: "InnerProduct"
+  bottom: "fc6_feet"
+  top: "fc7_feet"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_feet"
+  type: "ReLU"
+  bottom: "fc7_feet"
+  top: "fc7_feet"
+}
+layer {
+  name: "drop7_feet"
+  type: "Dropout"
+  bottom: "fc7_feet"
+  top: "fc7_feet"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_feet"
+  type: "InnerProduct"
+  bottom: "fc7_feet"
+  top: "cls_score_feet"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 6
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_feet"
+  type: "MIL"
+  bottom: "cls_score_feet"
+  top: "mil_cls_score_feet"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_feet"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_feet"
+  bottom: "pvp_ankle2"
+  bottom: "pvp_ankle2_wts"
+  top: "loss_feet"
+  loss_weight: 14.5
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_feet"
+        top: "predict_feet"
+        name: "predict_feet"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_feet"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_feet"
+  bottom: "pvp_ankle2"
+  top: "accuracy_feet"
+}
+
+## knee########################################################
+layer {
+  name: "feat_concat_knee"
+  type: "Concat"
+  bottom: "partroi2_pool5"
+  bottom: "partroi3_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "knee_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_knee"
+  type: "InnerProduct"
+  bottom: "knee_part_concat"
+  top: "fc6_knee"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_knee"
+  type: "ReLU"
+  bottom: "fc6_knee"
+  top: "fc6_knee"
+}
+layer {
+  name: "drop6_knee"
+  type: "Dropout"
+  bottom: "fc6_knee"
+  top: "fc6_knee"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_knee"
+  type: "InnerProduct"
+  bottom: "fc6_knee"
+  top: "fc7_knee"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_knee"
+  type: "ReLU"
+  bottom: "fc7_knee"
+  top: "fc7_knee"
+}
+layer {
+  name: "drop7_knee"
+  type: "Dropout"
+  bottom: "fc7_knee"
+  top: "fc7_knee"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_knee"
+  type: "InnerProduct"
+  bottom: "fc7_knee"
+  top: "cls_score_knee"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 6
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_knee"
+  type: "MIL"
+  bottom: "cls_score_knee"
+  top: "mil_cls_score_knee"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_knee"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_knee"
+  bottom: "pvp_knee2"
+  bottom: "pvp_knee2_wts"
+  top: "loss_knee"
+  loss_weight: 18.1
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_knee"
+        top: "predict_knee"
+        name: "predict_knee"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_knee"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_knee"
+  bottom: "pvp_knee2"
+  top: "accuracy_knee"
+}
+
+## hip######################################################
+layer {
+  name: "feat_concat_hip"
+  type: "Concat"
+  bottom: "partroi5_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "hip_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_hip"
+  type: "InnerProduct"
+  bottom: "hip_part_concat"
+  top: "fc6_hip"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_hip"
+  type: "ReLU"
+  bottom: "fc6_hip"
+  top: "fc6_hip"
+}
+layer {
+  name: "drop6_hip"
+  type: "Dropout"
+  bottom: "fc6_hip"
+  top: "fc6_hip"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_hip"
+  type: "InnerProduct"
+  bottom: "fc6_hip"
+  top: "fc7_hip"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_hip"
+  type: "ReLU"
+  bottom: "fc7_hip"
+  top: "fc7_hip"
+}
+layer {
+  name: "drop7_hip"
+  type: "Dropout"
+  bottom: "fc7_hip"
+  top: "fc7_hip"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_hip"
+  type: "InnerProduct"
+  bottom: "fc7_hip"
+  top: "cls_score_hip"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 3
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_hip"
+  type: "MIL"
+  bottom: "cls_score_hip"
+  top: "mil_cls_score_hip"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_hip"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_hip"
+  bottom: "pvp_hip"
+  bottom: "pvp_hip_wts"
+  top: "loss_hip"
+  loss_weight: 6.8
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_hip"
+        top: "predict_hip"
+        name: "predict_hip"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_hip"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_hip"
+  bottom: "pvp_hip"
+  top: "accuracy_hip"
+}
+
+## hand#######################################################
+layer {
+  name: "feat_concat_hand"
+  type: "Concat"
+  bottom: "partroi7_pool5"
+  bottom: "partroi10_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "hand_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_hand"
+  type: "InnerProduct"
+  bottom: "hand_part_concat"
+  top: "fc6_hand"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_hand"
+  type: "ReLU"
+  bottom: "fc6_hand"
+  top: "fc6_hand"
+}
+layer {
+  name: "drop6_hand"
+  type: "Dropout"
+  bottom: "fc6_hand"
+  top: "fc6_hand"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_hand"
+  type: "InnerProduct"
+  bottom: "fc6_hand"
+  top: "fc7_hand"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_hand"
+  type: "ReLU"
+  bottom: "fc7_hand"
+  top: "fc7_hand"
+}
+layer {
+  name: "drop7_hand"
+  type: "Dropout"
+  bottom: "fc7_hand"
+  top: "fc7_hand"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_hand"
+  type: "InnerProduct"
+  bottom: "fc7_hand"
+  top: "cls_score_hand"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 23
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_hand"
+  type: "MIL"
+  bottom: "cls_score_hand"
+  top: "mil_cls_score_hand"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_hand"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_hand"
+  bottom: "pvp_hand2"
+  bottom: "pvp_hand2_wts"
+  top: "loss_hand"
+  loss_weight: 10.9
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_hand"
+        top: "predict_hand"
+        name: "predict_hand"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_hand"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_hand"
+  bottom: "pvp_hand2"
+  top: "accuracy_hand"
+}
+
+## shoulder#######################################################
+layer {
+  name: "feat_concat_shoulder"
+  type: "Concat"
+  bottom: "partroi8_pool5"
+  bottom: "partroi9_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "shoulder_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_shoulder"
+  type: "InnerProduct"
+  bottom: "shoulder_part_concat"
+  top: "fc6_shoulder"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_shoulder"
+  type: "ReLU"
+  bottom: "fc6_shoulder"
+  top: "fc6_shoulder"
+}
+layer {
+  name: "drop6_shoulder"
+  type: "Dropout"
+  bottom: "fc6_shoulder"
+  top: "fc6_shoulder"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_shoulder"
+  type: "InnerProduct"
+  bottom: "fc6_shoulder"
+  top: "fc7_shoulder"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_shoulder"
+  type: "ReLU"
+  bottom: "fc7_shoulder"
+  top: "fc7_shoulder"
+}
+layer {
+  name: "drop7_shoulder"
+  type: "Dropout"
+  bottom: "fc7_shoulder"
+  top: "fc7_shoulder"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_shoulder"
+  type: "InnerProduct"
+  bottom: "fc7_shoulder"
+  top: "cls_score_shoulder"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 5
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_shoulder"
+  type: "MIL"
+  bottom: "cls_score_shoulder"
+  top: "mil_cls_score_shoulder"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_shoulder"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_shoulder"
+  bottom: "pvp_shoulder2"
+  bottom: "pvp_shoulder2_wts"
+  top: "loss_shoulder"
+  loss_weight: 18.9
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_shoulder"
+        top: "predict_shoulder"
+        name: "predict_shoulder"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_shoulder"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_shoulder"
+  bottom: "pvp_shoulder2"
+  top: "accuracy_shoulder"
+}
+
+## head#######################################################
+layer {
+  name: "feat_concat_head"
+  type: "Concat"
+  bottom: "partroi6_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "head_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_head"
+  type: "InnerProduct"
+  bottom: "head_part_concat"
+  top: "fc6_head"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_head"
+  type: "ReLU"
+  bottom: "fc6_head"
+  top: "fc6_head"
+}
+layer {
+  name: "drop6_head"
+  type: "Dropout"
+  bottom: "fc6_head"
+  top: "fc6_head"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_head"
+  type: "InnerProduct"
+  bottom: "fc6_head"
+  top: "fc7_head"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_head"
+  type: "ReLU"
+  bottom: "fc7_head"
+  top: "fc7_head"
+}
+layer {
+  name: "drop7_head"
+  type: "Dropout"
+  bottom: "fc7_head"
+  top: "fc7_head"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_head"
+  type: "InnerProduct"
+  bottom: "fc7_head"
+  top: "cls_score_head"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 12
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_head"
+  type: "MIL"
+  bottom: "cls_score_head"
+  top: "mil_cls_score_head"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_head"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_head"
+  bottom: "pvp_head"
+  bottom: "pvp_head_wts"
+  top: "loss_head"
+  loss_weight: 8.4
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_head"
+        top: "predict_head"
+        name: "predict_head"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_head"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_head"
+  bottom: "pvp_head"
+  top: "accuracy_head"
+}
+
+layer {
+  name: "partpairs_10v"
+  type: "Concat"
+  bottom: "fc7_feet"#"cls_score_feet"
+  bottom: "fc7_knee"#"cls_score_knee"
+  bottom: "fc7_hip"#"cls_score_hip"
+  bottom: "fc7_hand"#"cls_score_hand"
+  bottom: "fc7_shoulder"#"cls_score_shoulder"
+  bottom: "fc7_head" #cls_score_head
+  top: "partpairs_10v"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_part"
+  type: "InnerProduct"
+  bottom: "partpairs_10v"
+  top: "fc6_part"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 1024 #4096
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_part"
+  type: "ReLU"
+  bottom: "fc6_part"
+  top: "fc6_part"
+}
+layer {
+  name: "drop6_part"
+  type: "Dropout"
+  bottom: "fc6_part"
+  top: "fc6_part"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_part"
+  type: "InnerProduct"
+  bottom: "fc6_part"
+  top: "fc7_part"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 1024 #4096
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_part"
+  type: "ReLU"
+  bottom: "fc7_part"
+  top: "fc7_part"
+}
+layer {
+  name: "drop7_part"
+  type: "Dropout"
+  bottom: "fc7_part"
+  top: "fc7_part"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_part"
+  type: "InnerProduct"
+  bottom: "fc7_part"
+  top: "cls_score_part"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 10
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_part"
+  type: "MIL"
+  bottom: "cls_score_part"
+  top: "mil_cls_score_part"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_part_stream"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_part"
+  bottom: "hp_list"
+  bottom: "hp_list_wts" # now wts can be set by the statics of pvp wts
+  top: "loss_part"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+    bottom: "mil_cls_score_part"
+    top: "predict_part"
+    name: "predict_part"
+    type: "Sigmoid"
+}
+layer {
+    name: "accuracy_part"
+    type: "MultiLabelAccuracy"
+    bottom: "predict_part"
+    bottom: "hp_list"
+    top: "accuracy_part"
+}
+##########################################hierarchical pvp##############################
+layer {
+  name: "label_hand_shoulder"
+  type: "Concat"
+  bottom: "pvp_hand2"#"cls_score_hand"
+  bottom: "pvp_shoulder2"#"cls_score_shoulder"
+  top: "pvp_arm"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "wts_hand_shoulder"
+  type: "Concat"
+  bottom: "pvp_hand2_wts"#"cls_score_hand"
+  bottom: "pvp_shoulder2_wts"#"cls_score_shoulder"
+  top: "pvp_arm_wts"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "label_feet_knee"
+  type: "Concat"
+  bottom: "pvp_ankle2"#"cls_score_hand"
+  bottom: "pvp_knee2"#"cls_score_shoulder"
+  top: "pvp_leg"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "wts_feet_knee"
+  type: "Concat"
+  bottom: "pvp_ankle2_wts"#"cls_score_hand"
+  bottom: "pvp_knee2_wts"#"cls_score_shoulder"
+  top: "pvp_leg_wts"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "label_hand_shoulder_head"
+  type: "Concat"
+  bottom: "pvp_arm"#"cls_score_hand"
+  bottom: "pvp_head"#"cls_score_shoulder"
+  top: "pvp_upper"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "wts_hand_shoulder_head"
+  type: "Concat"
+  bottom: "pvp_arm_wts"#"cls_score_hand"
+  bottom: "pvp_head_wts"#"cls_score_shoulder"
+  top: "pvp_upper_wts"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "label_feet_knee_hip"
+  type: "Concat"
+  bottom: "pvp_leg"#"cls_score_hand"
+  bottom: "pvp_hip"#"cls_score_shoulder"
+  top: "pvp_below"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "wts_feet_knee_hip"
+  type: "Concat"
+  bottom: "pvp_leg_wts"#"cls_score_hand"
+  bottom: "pvp_hip_wts"#"cls_score_shoulder"
+  top: "pvp_below_wts"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: "label_pvp_body"
+  type: "Concat"
+  bottom: "pvp_upper"#"cls_score_hand"
+  bottom: "pvp_below"#"cls_score_shoulder"
+  top: "pvp_body"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "wts_pvp_body"
+  type: "Concat"
+  bottom: "pvp_upper_wts"#"cls_score_hand"
+  bottom: "pvp_below_wts"#"cls_score_shoulder"
+  top: "pvp_body_wts"
+  concat_param {
+    axis: 1
+  }
+}
+########################################## hand+shoulder=arm
+layer {
+  name: "feat_concat_arm"
+  type: "Concat"
+  bottom: "fc6_hand"#"cls_score_hand"
+  bottom: "fc6_shoulder"#"cls_score_shoulder"
+  top: "fc_arm"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_arm"
+  type: "InnerProduct"
+  bottom: "fc_arm"
+  top: "fc6_arm"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_arm"
+  type: "ReLU"
+  bottom: "fc6_arm"
+  top: "fc6_arm"
+}
+layer {
+  name: "drop6_arm"
+  type: "Dropout"
+  bottom: "fc6_arm"
+  top: "fc6_arm"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_arm"
+  type: "InnerProduct"
+  bottom: "fc6_arm"
+  top: "cls_score_arm"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 28
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_arm"
+  type: "MIL"
+  bottom: "cls_score_arm"
+  top: "mil_cls_score_arm"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_arm"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_arm"
+  bottom: "pvp_arm"
+  bottom: "pvp_arm_wts"
+  top: "loss_arm"
+  #loss_weight: 
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_arm"
+        top: "predict_arm"
+        name: "predict_arm"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_arm"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_arm"
+  bottom: "pvp_arm"
+  top: "accuracy_arm"
+}
+########################################## feet+knee=leg
+layer {
+  name: "feat_concat_leg"
+  type: "Concat"
+  bottom: "fc6_feet"#"cls_score_hand"
+  bottom: "fc6_knee"#"cls_score_shoulder"
+  top: "fc_leg"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_leg"
+  type: "InnerProduct"
+  bottom: "fc_leg"
+  top: "fc6_leg"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_leg"
+  type: "ReLU"
+  bottom: "fc6_leg"
+  top: "fc6_leg"
+}
+layer {
+  name: "drop6_leg"
+  type: "Dropout"
+  bottom: "fc6_leg"
+  top: "fc6_leg"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_leg"
+  type: "InnerProduct"
+  bottom: "fc6_leg"
+  top: "cls_score_leg"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 12
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_leg"
+  type: "MIL"
+  bottom: "cls_score_leg"
+  top: "mil_cls_score_leg"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_leg"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_leg"
+  bottom: "pvp_leg"
+  bottom: "pvp_leg_wts"
+  top: "loss_leg"
+  #loss_weight: 
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_leg"
+        top: "predict_leg"
+        name: "predict_leg"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_leg"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_leg"
+  bottom: "pvp_leg"
+  top: "accuracy_leg"
+}
+########################################## arm+head=upper
+layer {
+  name: "feat_concat_upper"
+  type: "Concat"
+  bottom: "fc6_arm"#"cls_score_hand"
+  bottom: "fc6_head"#"cls_score_shoulder"
+  top: "fc_upper"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_upper"
+  type: "InnerProduct"
+  bottom: "fc_upper"
+  top: "fc6_upper"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_upper"
+  type: "ReLU"
+  bottom: "fc6_upper"
+  top: "fc6_upper"
+}
+layer {
+  name: "drop6_upper"
+  type: "Dropout"
+  bottom: "fc6_upper"
+  top: "fc6_upper"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_upper"
+  type: "InnerProduct"
+  bottom: "fc6_upper"
+  top: "cls_score_upper"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 40
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_upper"
+  type: "MIL"
+  bottom: "cls_score_upper"
+  top: "mil_cls_score_upper"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_upper"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_upper"
+  bottom: "pvp_upper"
+  bottom: "pvp_upper_wts"
+  top: "loss_upper"
+  #loss_weight: 
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_upper"
+        top: "predict_upper"
+        name: "predict_upper"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_upper"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_upper"
+  bottom: "pvp_upper"
+  top: "accuracy_upper"
+}
+########################################## leg+hop=below
+layer {
+  name: "feat_concat_below"
+  type: "Concat"
+  bottom: "fc6_leg"#"cls_score_hand"
+  bottom: "fc6_hip"#"cls_score_shoulder"
+  top: "fc_below"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_below"
+  type: "InnerProduct"
+  bottom: "fc_below"
+  top: "fc6_below"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_below"
+  type: "ReLU"
+  bottom: "fc6_below"
+  top: "fc6_below"
+}
+layer {
+  name: "drop6_below"
+  type: "Dropout"
+  bottom: "fc6_below"
+  top: "fc6_below"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_below"
+  type: "InnerProduct"
+  bottom: "fc6_below"
+  top: "cls_score_below"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 15
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_below"
+  type: "MIL"
+  bottom: "cls_score_below"
+  top: "mil_cls_score_below"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_below"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_below"
+  bottom: "pvp_below"
+  bottom: "pvp_below_wts"
+  top: "loss_below"
+  #loss_weight: 
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_below"
+        top: "predict_below"
+        name: "predict_below"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_below"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_below"
+  bottom: "pvp_below"
+  top: "accuracy_below"
+}
+########################################## upper+below=body
+layer {
+  name: "feat_concat_body"
+  type: "Concat"
+  bottom: "fc6_upper"#"cls_score_hand"
+  bottom: "fc6_below"#"cls_score_shoulder"
+  top: "fc_body"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_body"
+  type: "InnerProduct"
+  bottom: "fc_body"
+  top: "fc6_body"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_body"
+  type: "ReLU"
+  bottom: "fc6_body"
+  top: "fc6_body"
+}
+layer {
+  name: "drop6_body"
+  type: "Dropout"
+  bottom: "fc6_body"
+  top: "fc6_body"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_body"
+  type: "InnerProduct"
+  bottom: "fc6_body"
+  top: "cls_score_body"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 55
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_body"
+  type: "MIL"
+  bottom: "cls_score_body"
+  top: "mil_cls_score_body"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_body"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_body"
+  bottom: "pvp_body"
+  bottom: "pvp_body_wts"
+  top: "loss_body"
+  #loss_weight: 
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_body"
+        top: "predict_body"
+        name: "predict_body"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_body"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_body"
+  bottom: "pvp_body"
+  top: "accuracy_body"
+}
+layer {
+  name: "cls_score_117v-"
+  type: "InnerProduct"
+  bottom: "fc6_body"
+  top: "cls_score_117v"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 117
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_117v"
+  type: "MIL"
+  bottom: "cls_score_117v"
+  top: "mil_cls_score_117v"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_117v"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_117v"
+  bottom: "verb_list"
+  bottom: "verb_list_wts"
+  top: "loss_117v"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_117v"
+        top: "predict_117v"
+        name: "predict_117v"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_117v"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_117v"
+  bottom: "verb_list"
+  top: "accuracy_117v"
+}
+layer {
+  name: "cls_score_pvp_all-"
+  type: "InnerProduct"
+  bottom: "fc6_body"
+  top: "cls_score_pvp_all"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 600
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_pvp_all"
+  type: "MIL"
+  bottom: "cls_score_pvp_all"
+  top: "mil_cls_score_pvp_all"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_pvp_all"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_pvp_all"
+  bottom: "label"
+  bottom: "label_wts"
+  top: "loss_pvp_all"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_pvp_all"
+        top: "predict_pvp_all"
+        name: "predict_pvp_all"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_pvp_all"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_pvp_all"
+  bottom: "label"
+  top: "accuracy_pvp_all"
+}
+
+############################################# second stream predictions #################################################
+layer {
+  name: "feat_concat2"
+  type: "Concat"
+  #bottom: "dim_red_convAAA"
+  #bottom: "dim_red_convDD"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "sceneroi_pool5"
+  top: "dim_red_feats2"
+  concat_param {
+    axis: 1 # channels
+  }
+}
+
+
+# normal fc6 and fc7
+layer {
+  name: "fc6_stream2"
+  type: "InnerProduct"
+
+  bottom: "dim_red_feats2"
+  top: "fc6_stream2"
+  
+  param {
+    name: "fc6_w_stream2"
+    lr_mult: 0.1
+    decay_mult: 0.1
+  }
+  param {
+    name: "fc6_b_stream2"
+    lr_mult: 0.2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu6_stream2"
+  type: "ReLU"
+  bottom: "fc6_stream2"
+  top: "fc6_stream2"
+}
+layer {
+  name: "drop6_stream2"
+  type: "Dropout"
+  bottom: "fc6_stream2"
+  top: "fc6_stream2"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_stream2"
+  type: "InnerProduct"
+  bottom: "fc6_stream2"
+  top: "fc7_stream2"
+  param {
+    name: "fc7_w_stream2"
+    lr_mult: 0.1
+    decay_mult: 0.1
+  }
+  param {
+    name: "fc7_b_stream2"
+    lr_mult: 0.2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu7_stream2"
+  type: "ReLU"
+  bottom: "fc7_stream2"
+  top: "fc7_stream2"
+}
+layer {
+  name: "drop7_stream2"
+  type: "Dropout"
+  bottom: "fc7_stream2"
+  top: "fc7_stream2"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_stream2"
+  type: "InnerProduct"
+  bottom: "fc7_stream2"
+  top: "cls_score_stream2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 600
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_stream2"
+  type: "MIL"
+  bottom: "cls_score_stream2"
+  top: "mil_cls_score_stream2"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_stream2"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_stream2"
+  bottom: "label"
+  bottom: "label_wts"
+  top: "loss_new"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+
+layer {
+        bottom: "mil_cls_score_stream2"
+        top: "predict_stream2"
+        name: "predict_stream2"
+        type: "Sigmoid"
+}
+
+layer {
+  name: "accuracy_stream2"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_stream2"
+  bottom: "label"
+  top: "accuracy_stream2"
+}
+

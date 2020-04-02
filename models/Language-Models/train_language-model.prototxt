@@ -1,0 +1,4451 @@
+name: "VGG_ILSVRC_16_layers"
+layer {
+  name: 'data'
+  type: 'Python'
+  top: 'data'
+  top: 'human_roi'
+  top: 'obj1_roi'
+  top: 'obj2_roi'
+  top: 'obj3_roi'
+  top: 'obj4_roi'
+  top: 'rel1_roi'
+  top: 'rel2_roi'
+  top: 'rel3_roi'
+  top: 'rel4_roi'
+  top: 'scene_roi'
+  top: 'label'
+  top: 'part_roi' #N = M people * K parts 
+  top: 'label_wts'
+  top: 'human_prior'
+  top: 'hp_list'
+  top: 'hp_list_wts'
+  ######################## pvp and wts
+  top: 'pvp_ankle2'
+  top: 'pvp_ankle2_wts'
+  top: 'pvp_knee2'
+  top: 'pvp_knee2_wts'
+  top: 'pvp_hip'
+  top: 'pvp_hip_wts'
+  top: 'pvp_hand2'
+  top: 'pvp_hand2_wts'
+  top: 'pvp_shoulder2'
+  top: 'pvp_shoulder2_wts'
+  top: 'pvp_head'
+  top: 'pvp_head_wts'
+  top: 'pvp_wts'
+  ########################117 verb and 80 object
+  top: 'verb_list'
+  top: 'verb_list_wts'
+  top: 'object_list'
+  top: 'object_list_wts'
+ ######################## language
+  top: 'language_pvp_55'
+  top: 'language_hoi'
+  top: 'language_obj'
+ ####################### detection object list (1, 80)
+  top: 'det_object_list'
+  python_param {
+    module: 'HOI_data_layer-language'
+    layer: 'HOIDataLayer'
+    param_str: '{"batch_size":1,"max_size":640, "root":"./data/hico/","list_file":"./data/hico/train_filelist.txt"}'
+  }
+  include {
+    phase: TRAIN
+  }
+}
+
+layer {
+  name: 'data'
+  type: 'Python'
+  top: 'data'
+  top: 'human_roi'
+  top: 'obj1_roi'
+  top: 'obj2_roi'
+  top: 'obj3_roi'
+  top: 'obj4_roi'
+  top: 'rel1_roi'
+  top: 'rel2_roi'
+  top: 'rel3_roi'
+  top: 'rel4_roi'
+  top: 'scene_roi'
+  top: 'label'
+  top: 'part_roi'#N = M people * K parts 
+  top: 'label_wts'
+  top: 'human_prior'
+  top: 'hp_list'
+  top: 'hp_list_wts'
+  ######################## pvp and wts
+  top: 'pvp_ankle2'
+  top: 'pvp_ankle2_wts'
+  top: 'pvp_knee2'
+  top: 'pvp_knee2_wts'
+  top: 'pvp_hip'
+  top: 'pvp_hip_wts'
+  top: 'pvp_hand2'
+  top: 'pvp_hand2_wts'
+  top: 'pvp_shoulder2'
+  top: 'pvp_shoulder2_wts'
+  top: 'pvp_head'
+  top: 'pvp_head_wts'
+  top: 'pvp_wts'
+  ########################117 verb and 80 object
+  top: 'verb_list'
+  top: 'verb_list_wts'
+  top: 'object_list'
+  top: 'object_list_wts'
+ ######################## language
+  top: 'language_pvp_55'
+  top: 'language_hoi'
+  top: 'language_obj'
+ ####################### detection object list (1, 80)
+  top: 'det_object_list'
+  python_param {
+    module: 'HOI_data_layer-language'
+    layer: 'HOIDataLayer'
+    param_str: '{"batch_size":1,"max_size":640,"root":"./data/hico/","list_file":"./data/hico/test_filelist.txt"}'
+  }
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "conv3_2"
+  top: "conv3_3"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3"
+}
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "conv4_3"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "conv4_3"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu4_3"
+  type: "ReLU"
+  bottom: "conv4_3"
+  top: "conv4_3"
+}
+layer {
+  name: "pool4"
+  type: "Pooling"
+  bottom: "conv4_3"
+  top: "pool4"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "conv5_1"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "conv5_1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu5_1"
+  type: "ReLU"
+  bottom: "conv5_1"
+  top: "conv5_1"
+}
+layer {
+  name: "conv5_2"
+  type: "Convolution"
+  bottom: "conv5_1"
+  top: "conv5_2"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu5_2"
+  type: "ReLU"
+  bottom: "conv5_2"
+  top: "conv5_2"
+}
+layer {
+  name: "conv5_3"
+  type: "Convolution"
+  bottom: "conv5_2"
+  top: "conv5_3"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+    engine: CAFFE
+  }
+}
+layer {
+  name: "relu5_3"
+  type: "ReLU"
+  bottom: "conv5_3"
+  top: "conv5_3"
+}
+
+# Four reduction layers: dim_red_11 - dim_red_44
+layer {
+  name: "dim_red_11"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_11"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 45
+    pad: 0
+    kernel_size: 1
+    engine: CAFFE
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "dim_red_22"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_22"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 166
+    pad: 0
+    kernel_size: 1
+    engine: CAFFE
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "dim_red_33"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_33"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 166
+    pad: 0
+    kernel_size: 1
+    engine: CAFFE
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "dim_red_44"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_44"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 6
+    pad: 0
+    kernel_size: 1
+    engine: CAFFE
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "dim_red_55"
+  type: "Convolution"
+  bottom: "conv5_3"
+  top: "dim_red_55"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 45
+    pad: 0
+    kernel_size: 1
+    engine: CAFFE
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+# Layers based on dim_red_11
+layer {
+  name: "relroi1_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel1_roi"
+  top: "relroi1_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "relroi2_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel2_roi"
+  top: "relroi2_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "relroi3_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel3_roi"
+  top: "relroi3_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "relroi4_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_11"
+  bottom: "rel4_roi"
+  top: "relroi4_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+
+
+
+layer {
+  name: "humanroi_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_22"
+  bottom: "human_roi"
+  top: "humanroi_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "obj1_roi_s"
+  type: "Silence"
+  bottom: "obj1_roi"
+}
+layer {
+  name: "obj2_roi_s"
+  type: "Silence"
+  bottom: "obj2_roi"
+}
+layer {
+  name: "obj3_roi_s"
+  type: "Silence"
+  bottom: "obj3_roi"
+}
+layer {
+  name: "obj4_roi_s"
+  type: "Silence"
+  bottom: "obj4_roi"
+}
+layer {
+  name: "hp_list_s"
+  type: "Silence"
+  bottom: "hp_list"
+}
+layer {
+  name: "hp_list_wts_s"
+  type: "Silence"
+  bottom: "hp_list_wts"
+}
+layer {
+  name: "object_list_s"
+  type: "Silence"
+  bottom: "object_list"
+}
+layer {
+  name: "object_list_wts_s"
+  type: "Silence"
+  bottom: "object_list_wts"
+}
+layer {
+  name: "language_hoi_s"
+  type: "Silence"
+  bottom: "language_hoi"
+}
+layer {
+  name: "pvp_wts_s"
+  type: "Silence"
+  bottom: "pvp_wts"
+}
+
+layer {
+  name: "sceneroi_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_33"
+  bottom: "scene_roi"
+  top: "sceneroi_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+
+layer {
+  name: "slicer_roi"
+  type: "Slice"
+  bottom: "part_roi"
+  top: 'part_roi1'#RAnk
+  top: 'part_roi2'#RKne
+  top: 'part_roi3'#LKne
+  top: 'part_roi4'#LAnk
+  top: 'part_roi5'#Pelv
+  top: 'part_roi6'#Neck
+  top: 'part_roi7'#RWri
+  top: 'part_roi8'#RElb
+  top: 'part_roi9'#LElb
+  top: 'part_roi10'#LWri
+  slice_param {
+    axis: 0
+  }
+}
+
+#####################################part pooling
+layer {
+  name: "partroi1_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi1"
+  top: "partroi1_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi2_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi2"
+  top: "partroi2_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi3_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi3"
+  top: "partroi3_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi4_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi4"
+  top: "partroi4_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi5_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi5"
+  top: "partroi5_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi6_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi6"
+  top: "partroi6_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi1_pool7"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi7"
+  top: "partroi7_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi8_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi8"
+  top: "partroi8_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi9_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi9"
+  top: "partroi9_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroi10_pool5"
+  type: "ROIPooling"
+  bottom: "dim_red_55"
+  bottom: "part_roi10"
+  top: "partroi10_pool5"
+  roi_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+
+layer {
+  name: "human_prior"
+  type: "Silence"
+  bottom: "human_prior"
+}
+# ankle wrist
+layer {
+  name: "partroipair1_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi7"
+  top: "partroipair1_pool5"
+  roipair_pooling_param{
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair2_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi10"
+  top: "partroipair2_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair3_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi7"
+  top: "partroipair3_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair4_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi10"
+  top: "partroipair4_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+#ankle knee
+layer {
+  name: "partroipair5_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi2"
+  top: "partroipair5_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair6_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi3"
+  top: "partroipair6_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair7_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi2"
+  top: "partroipair7_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair8_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi3"
+  top: "partroipair8_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+#ankle elbow
+layer {
+  name: "partroipair9_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi8"
+  top: "partroipair9_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair10_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi9"
+  top: "partroipair10_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair11_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi8"
+  top: "partroipair11_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair12_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi9"
+  top: "partroipair12_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+#ankle pelv 
+layer {
+  name: "partroipair13_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi1"
+  bottom: "part_roi5"
+  top: "partroipair13_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair14_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi4"
+  bottom: "part_roi5"
+  top: "partroipair14_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+#knee wrist
+layer {
+  name: "partroipair15_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi2"
+  bottom: "part_roi7"
+  top: "partroipair15_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair16_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi3"
+  bottom: "part_roi7"
+  top: "partroipair16_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair17_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi2"
+  bottom: "part_roi10"
+  top: "partroipair17_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair18_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi3"
+  bottom: "part_roi10"
+  top: "partroipair18_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+} 
+#knee elbow
+layer {
+  name: "partroipair19_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi2"
+  bottom: "part_roi8"
+  top: "partroipair19_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair20_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi3"
+  bottom: "part_roi8"
+  top: "partroipair20_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair21_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi2"
+  bottom: "part_roi9"
+  top: "partroipair21_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair22_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi3"
+  bottom: "part_roi9"
+  top: "partroipair22_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+} 
+#knee pelv
+layer {
+  name: "partroipair23_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi2"
+  bottom: "part_roi5"
+  top: "partroipair23_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair24_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi3"
+  bottom: "part_roi5"
+  top: "partroipair24_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+} 
+#wrist pelv
+layer {
+  name: "partroipair25_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi5"
+  bottom: "part_roi7"
+  top: "partroipair25_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair26_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi5"
+  bottom: "part_roi10"
+  top: "partroipair26_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+#wrist neck
+layer {
+  name: "partroipair27_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi6"
+  bottom: "part_roi7"
+  top: "partroipair27_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair28_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi6"
+  bottom: "part_roi10"
+  top: "partroipair28_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+} 
+#elbow neck
+layer {
+  name: "partroipair29_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi6"
+  bottom: "part_roi8"
+  top: "partroipair29_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+}
+layer {
+  name: "partroipair30_pool5"
+  type: "ROIPairPooling"
+  bottom: "dim_red_44"
+  bottom: "part_roi6"
+  bottom: "part_roi9"
+  top: "partroipair30_pool5"
+  roipair_pooling_param {
+    pooled_w: 7
+    pooled_h: 7
+    spatial_scale: 0.0625 # 1/16
+  }
+} 
+
+############################# 6 pvp classifier
+###feet#################################################
+layer {
+  name: "feat_concat_feet"
+  type: "Concat"
+  bottom: "partroi1_pool5"
+  bottom: "partroi4_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "feet_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_feet"
+  type: "InnerProduct"
+  bottom: "feet_part_concat"
+  top: "fc6_feet"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_feet"
+  type: "ReLU"
+  bottom: "fc6_feet"
+  top: "fc6_feet"
+}
+layer {
+  name: "drop6_feet"
+  type: "Dropout"
+  bottom: "fc6_feet"
+  top: "fc6_feet"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_feet"
+  type: "InnerProduct"
+  bottom: "fc6_feet"
+  top: "fc7_feet"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_feet"
+  type: "ReLU"
+  bottom: "fc7_feet"
+  top: "fc7_feet"
+}
+layer {
+  name: "drop7_feet"
+  type: "Dropout"
+  bottom: "fc7_feet"
+  top: "fc7_feet"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_feet"
+  type: "InnerProduct"
+  bottom: "fc7_feet"
+  top: "cls_score_feet"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 6
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_feet"
+  type: "MIL"
+  bottom: "cls_score_feet"
+  top: "mil_cls_score_feet"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_feet"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_feet"
+  bottom: "pvp_ankle2"
+  bottom: "pvp_ankle2_wts"
+  top: "loss_feet"
+  loss_weight: 12.4
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_feet"
+        top: "predict_feet"
+        name: "predict_feet"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_feet"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_feet"
+  bottom: "pvp_ankle2"
+  top: "accuracy_feet"
+}
+
+## knee########################################################
+layer {
+  name: "feat_concat_knee"
+  type: "Concat"
+  bottom: "partroi2_pool5"
+  bottom: "partroi3_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "knee_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_knee"
+  type: "InnerProduct"
+  bottom: "knee_part_concat"
+  top: "fc6_knee"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_knee"
+  type: "ReLU"
+  bottom: "fc6_knee"
+  top: "fc6_knee"
+}
+layer {
+  name: "drop6_knee"
+  type: "Dropout"
+  bottom: "fc6_knee"
+  top: "fc6_knee"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_knee"
+  type: "InnerProduct"
+  bottom: "fc6_knee"
+  top: "fc7_knee"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_knee"
+  type: "ReLU"
+  bottom: "fc7_knee"
+  top: "fc7_knee"
+}
+layer {
+  name: "drop7_knee"
+  type: "Dropout"
+  bottom: "fc7_knee"
+  top: "fc7_knee"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_knee"
+  type: "InnerProduct"
+  bottom: "fc7_knee"
+  top: "cls_score_knee"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 6
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_knee"
+  type: "MIL"
+  bottom: "cls_score_knee"
+  top: "mil_cls_score_knee"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_knee"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_knee"
+  bottom: "pvp_knee2"
+  bottom: "pvp_knee2_wts"
+  top: "loss_knee"
+  loss_weight: 16.7
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_knee"
+        top: "predict_knee"
+        name: "predict_knee"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_knee"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_knee"
+  bottom: "pvp_knee2"
+  top: "accuracy_knee"
+}
+
+## hip######################################################
+layer {
+  name: "feat_concat_hip"
+  type: "Concat"
+  bottom: "partroi5_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "hip_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_hip"
+  type: "InnerProduct"
+  bottom: "hip_part_concat"
+  top: "fc6_hip"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_hip"
+  type: "ReLU"
+  bottom: "fc6_hip"
+  top: "fc6_hip"
+}
+layer {
+  name: "drop6_hip"
+  type: "Dropout"
+  bottom: "fc6_hip"
+  top: "fc6_hip"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_hip"
+  type: "InnerProduct"
+  bottom: "fc6_hip"
+  top: "fc7_hip"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_hip"
+  type: "ReLU"
+  bottom: "fc7_hip"
+  top: "fc7_hip"
+}
+layer {
+  name: "drop7_hip"
+  type: "Dropout"
+  bottom: "fc7_hip"
+  top: "fc7_hip"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_hip"
+  type: "InnerProduct"
+  bottom: "fc7_hip"
+  top: "cls_score_hip"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 3
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_hip"
+  type: "MIL"
+  bottom: "cls_score_hip"
+  top: "mil_cls_score_hip"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_hip"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_hip"
+  bottom: "pvp_hip"
+  bottom: "pvp_hip_wts"
+  top: "loss_hip"
+  loss_weight: 9.7
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_hip"
+        top: "predict_hip"
+        name: "predict_hip"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_hip"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_hip"
+  bottom: "pvp_hip"
+  top: "accuracy_hip"
+}
+
+## hand#######################################################
+layer {
+  name: "feat_concat_hand"
+  type: "Concat"
+  bottom: "partroi7_pool5"
+  bottom: "partroi10_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "hand_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_hand"
+  type: "InnerProduct"
+  bottom: "hand_part_concat"
+  top: "fc6_hand"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_hand"
+  type: "ReLU"
+  bottom: "fc6_hand"
+  top: "fc6_hand"
+}
+layer {
+  name: "drop6_hand"
+  type: "Dropout"
+  bottom: "fc6_hand"
+  top: "fc6_hand"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_hand"
+  type: "InnerProduct"
+  bottom: "fc6_hand"
+  top: "fc7_hand"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_hand"
+  type: "ReLU"
+  bottom: "fc7_hand"
+  top: "fc7_hand"
+}
+layer {
+  name: "drop7_hand"
+  type: "Dropout"
+  bottom: "fc7_hand"
+  top: "fc7_hand"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_hand"
+  type: "InnerProduct"
+  bottom: "fc7_hand"
+  top: "cls_score_hand"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 23
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_hand"
+  type: "MIL"
+  bottom: "cls_score_hand"
+  top: "mil_cls_score_hand"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_hand"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_hand"
+  bottom: "pvp_hand2"
+  bottom: "pvp_hand2_wts"
+  top: "loss_hand"
+  loss_weight: 4.2
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_hand"
+        top: "predict_hand"
+        name: "predict_hand"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_hand"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_hand"
+  bottom: "pvp_hand2"
+  top: "accuracy_hand"
+}
+
+## shoulder#######################################################
+layer {
+  name: "feat_concat_shoulder"
+  type: "Concat"
+  bottom: "partroi8_pool5"
+  bottom: "partroi9_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "shoulder_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_shoulder"
+  type: "InnerProduct"
+  bottom: "shoulder_part_concat"
+  top: "fc6_shoulder"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_shoulder"
+  type: "ReLU"
+  bottom: "fc6_shoulder"
+  top: "fc6_shoulder"
+}
+layer {
+  name: "drop6_shoulder"
+  type: "Dropout"
+  bottom: "fc6_shoulder"
+  top: "fc6_shoulder"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_shoulder"
+  type: "InnerProduct"
+  bottom: "fc6_shoulder"
+  top: "fc7_shoulder"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_shoulder"
+  type: "ReLU"
+  bottom: "fc7_shoulder"
+  top: "fc7_shoulder"
+}
+layer {
+  name: "drop7_shoulder"
+  type: "Dropout"
+  bottom: "fc7_shoulder"
+  top: "fc7_shoulder"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_shoulder"
+  type: "InnerProduct"
+  bottom: "fc7_shoulder"
+  top: "cls_score_shoulder"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 5
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_shoulder"
+  type: "MIL"
+  bottom: "cls_score_shoulder"
+  top: "mil_cls_score_shoulder"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_shoulder"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_shoulder"
+  bottom: "pvp_shoulder2"
+  bottom: "pvp_shoulder2_wts"
+  top: "loss_shoulder"
+  loss_weight: 19.9
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_shoulder"
+        top: "predict_shoulder"
+        name: "predict_shoulder"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_shoulder"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_shoulder"
+  bottom: "pvp_shoulder2"
+  top: "accuracy_shoulder"
+}
+
+## head#######################################################
+layer {
+  name: "feat_concat_head"
+  type: "Concat"
+  bottom: "partroi6_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "sceneroi_pool5"
+  top: "head_part_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "fc6_head"
+  type: "InnerProduct"
+  bottom: "head_part_concat"
+  top: "fc6_head"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_head"
+  type: "ReLU"
+  bottom: "fc6_head"
+  top: "fc6_head"
+}
+layer {
+  name: "drop6_head"
+  type: "Dropout"
+  bottom: "fc6_head"
+  top: "fc6_head"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_head"
+  type: "InnerProduct"
+  bottom: "fc6_head"
+  top: "fc7_head"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_head"
+  type: "ReLU"
+  bottom: "fc7_head"
+  top: "fc7_head"
+}
+layer {
+  name: "drop7_head"
+  type: "Dropout"
+  bottom: "fc7_head"
+  top: "fc7_head"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+layer {
+  name: "cls_score_head"
+  type: "InnerProduct"
+  bottom: "fc7_head"
+  top: "cls_score_head"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 12
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_head"
+  type: "MIL"
+  bottom: "cls_score_head"
+  top: "mil_cls_score_head"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_head"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_head"
+  bottom: "pvp_head"
+  bottom: "pvp_head_wts"
+  top: "loss_head"
+  loss_weight: 13.3
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_head"
+        top: "predict_head"
+        name: "predict_head"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_head"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_head"
+  bottom: "pvp_head"
+  top: "accuracy_head"
+}
+##################################################language
+###### slice (1, 55, 2304) to (1, 55, 1536)
+layer {
+  name: "slice_pvp"
+  type: "Slice"
+  bottom: "language_pvp_55"
+  top: "language_pvp_55_slice"
+  top: "language_pvp_55_dump"
+  slice_param {
+    axis: 2
+    slice_point: 1536
+  }
+}
+layer{
+    name: "language_pvp_55_dump_s"
+    type: "Silence"
+    bottom: "language_pvp_55_dump"
+}
+####### get obj vector
+layer {
+  name: "obj_matrix"
+  type: "Scale"
+  bottom: "language_obj" # [1 80 768]
+  bottom: "det_object_list" # [1 80]
+  top: "obj_matrix"
+  scale_param {
+    axis: 0
+  }
+}
+
+layer {
+  name: "reshape_obj_matrix"
+  type: "Reshape"
+  bottom: "obj_matrix"
+  top: "reshape_obj_matrix"
+  reshape_param {
+    shape {
+      dim: 1  
+      dim: 80
+      dim: 768
+      dim: 1
+    }
+  }
+}
+layer {
+  name: "mean_obj_matrix"
+  type: "Convolution"
+  bottom: "reshape_obj_matrix"
+  top: "mean_obj_matrix" #[1 1 768 1]
+  param {
+  lr_mult: 0
+  decay_mult: 0
+  }
+  param {
+  lr_mult: 0
+  decay_mult: 0
+  }
+  convolution_param {
+    num_output: 1
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "constant"
+      value: 1 # sum
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "obj_vec"
+  type: "Reshape"
+  bottom: "mean_obj_matrix"
+  top: "obj_vec"
+  reshape_param {
+    shape {
+      dim: 1  
+      dim: 1
+      dim: 768
+    }
+  }
+}
+layer {
+  name: "tile_obj_vec"
+  type: "Tile"
+  bottom: "obj_vec"
+  top: "tile_obj_vec" # [1 55 768]
+  tile_param {
+      axis : 1
+      tiles : 55
+  }
+}
+################## concat 1536 and 768
+layer {
+  name: "concat_language_pvp"
+  type: "Concat"
+  bottom: "language_pvp_55_slice" # [1 55 1536]
+  bottom: "tile_obj_vec" # [1 55 768]
+  top: "concat_language_pvp" # [1 55 2304]
+  concat_param {
+    axis: 2
+  }
+}
+
+####### concat pvp of pvp (pvp model output, 285)
+layer {
+  name: "concat_pvp"
+  type: "Concat"
+  bottom: "predict_feet"
+  bottom: "predict_knee"
+  bottom: "predict_hip"
+  bottom: "predict_hand"
+  bottom: "predict_shoulder"
+  bottom: "predict_head"
+  top: "concat_pvp" # [1 55]
+  concat_param {
+    axis: 1
+  }
+}
+############################################
+layer {
+    name: "reshape_pvp"
+    type: "Reshape"
+    bottom: "concat_pvp"
+    top: "reshape_pvp"
+    reshape_param {
+      shape {
+        dim: 1  
+        dim: 55
+        dim: 1
+      }
+    }
+  }
+layer {
+    name: "tile_pvp"
+    type: "Tile"
+    bottom: "reshape_pvp"
+    top: "tile_pvp"
+    tile_param {
+        axis : 2
+        tiles : 2304
+    }
+  }
+layer 
+{
+  name: "pvp_language_vec"
+  type: "Eltwise"
+  bottom: "tile_pvp"
+  bottom: "concat_language_pvp"
+  top: "pvp_language_vec"
+  eltwise_param {
+    operation: PROD 
+  }
+}
+layer {
+  name: "fc6_language"
+  type: "InnerProduct"
+  bottom: "pvp_language_vec"
+  top: "fc6_language"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu6_language"
+  type: "ReLU"
+  bottom: "fc6_language"
+  top: "fc6_language"
+}
+layer {
+  name: "drop6_language"
+  type: "Dropout"
+  bottom: "fc6_language"
+  top: "fc6_language"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_language"
+  type: "InnerProduct"
+  bottom: "fc6_language"
+  top: "fc7_language"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 512
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "relu7_language"
+  type: "ReLU"
+  bottom: "fc7_language"
+  top: "fc7_language"
+}
+layer {
+  name: "drop7_language"
+  type: "Dropout"
+  bottom: "fc7_language"
+  top: "fc7_language"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "language_600"
+  type: "InnerProduct"
+  bottom: "fc7_language"
+  top: "language_600"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 600
+    weight_filler {
+        type: "gaussian"
+        std: 0.01
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+    }
+  }
+}
+layer {
+  name: "loss_language_600"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "language_600"
+  bottom: "label"
+  bottom: "label_wts"
+  top: "loss_language_600"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "language_600"
+        top: "predict_language_600"
+        name: "predict_language_600"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_language_600"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_language_600"
+  bottom: "label"
+  top: "accuracy_language_600"
+}
+
+###############fuse 10 parts + h + 4 rels + scene + 6 pvps
+layer {
+  name: "part_pvp_all"
+  type: "Concat"
+  #bottom: "fc7_pvp"    #ignore 4096
+  bottom: "fc7_feet"
+  bottom: "fc7_knee"
+  bottom: "fc7_hip"
+  bottom: "fc7_hand"
+  bottom: "fc7_shoulder"
+  bottom: "fc7_head"
+  top: "pvp_all_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "cls_score_pvp_all"
+  type: "InnerProduct"
+  bottom: "pvp_all_concat"
+  top: "cls_score_pvp_all"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 600
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_pvp_all"
+  type: "MIL"
+  bottom: "cls_score_pvp_all"
+  top: "mil_cls_score_pvp_all"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_pvp_all"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_pvp_all"
+  bottom: "label"
+  bottom: "label_wts"
+  top: "loss_pvp_all"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_pvp_all"
+        top: "predict_pvp_all"
+        name: "predict_pvp_all"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_pvp_all"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_pvp_all"
+  bottom: "label"
+  top: "accuracy_pvp_all"
+}
+
+#####################################117v classifier########################
+# 512x6
+layer {
+  name: "part_117v"
+  type: "Concat"
+  bottom: "fc7_feet"#"cls_score_feet"
+  bottom: "fc7_knee"#"cls_score_knee"
+  bottom: "fc7_hip"#"cls_score_hip"
+  bottom: "fc7_hand"#"cls_score_hand"
+  bottom: "fc7_shoulder"#"cls_score_shoulder"
+  bottom: "fc7_head" #cls_score_head
+  top: "117v_concat"
+  concat_param {
+    axis: 1
+  }
+}
+layer {
+  name: "cls_score_117v"
+  type: "InnerProduct"
+  bottom: "117v_concat"
+  top: "cls_score_117v"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 117
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_117v"
+  type: "MIL"
+  bottom: "cls_score_117v"
+  top: "mil_cls_score_117v"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_117v"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_117v"
+  bottom: "verb_list"
+  bottom: "verb_list_wts"
+  top: "loss_117v"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+layer {
+        bottom: "mil_cls_score_117v"
+        top: "predict_117v"
+        name: "predict_117v"
+        type: "Sigmoid"
+}
+layer {
+  name: "accuracy_117v"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_117v"
+  bottom: "verb_list"
+  top: "accuracy_117v"
+}
+
+
+
+
+layer {
+  name: "roipairs"
+  type: "Concat"
+  bottom: "partroipair1_pool5"
+  bottom: "partroipair2_pool5"
+  bottom: "partroipair3_pool5"
+  bottom: "partroipair4_pool5"
+  bottom: "partroipair5_pool5"
+  bottom: "partroipair6_pool5"
+  bottom: "partroipair7_pool5"
+  bottom: "partroipair8_pool5"
+  bottom: "partroipair9_pool5"
+  bottom: "partroipair10_pool5"
+  bottom: "partroipair11_pool5"
+  bottom: "partroipair12_pool5"
+  bottom: "partroipair13_pool5"
+  bottom: "partroipair14_pool5"
+  bottom: "partroipair15_pool5"
+  bottom: "partroipair16_pool5"
+  bottom: "partroipair17_pool5"
+  bottom: "partroipair18_pool5"
+  bottom: "partroipair19_pool5"
+  bottom: "partroipair20_pool5"
+  bottom: "partroipair21_pool5"
+  bottom: "partroipair22_pool5"
+  bottom: "partroipair23_pool5"
+  bottom: "partroipair24_pool5"
+  bottom: "partroipair25_pool5"
+  bottom: "partroipair26_pool5"
+  bottom: "partroipair27_pool5"
+  bottom: "partroipair28_pool5"
+  bottom: "partroipair29_pool5"
+  bottom: "partroipair30_pool5"
+  top: "roipairs"
+  concat_param {
+    axis: 0
+  }
+}
+
+layer {
+  name: "fc6_iter1_new1"
+  type: "InnerProduct"
+  bottom: "roipairs"
+  top: "fc6_iter1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu6_iter1"
+  type: "ReLU"
+  bottom: "fc6_iter1"
+  top: "fc6_iter1"
+}
+layer {
+  name: "drop6_iter1"
+  type: "Dropout"
+  bottom: "fc6_iter1"
+  top: "fc6_iter1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_iter1"
+  type: "InnerProduct"
+  bottom: "fc6_iter1"
+  top: "fc7_iter1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu7_iter1"
+  type: "ReLU"
+  bottom: "fc7_iter1"
+  top: "fc7_iter1"
+}
+layer {
+  name: "drop7_iter1"
+  type: "Dropout"
+  bottom: "fc7_iter1"
+  top: "fc7_iter1"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_iter1"
+  type: "InnerProduct"
+  bottom: "fc7_iter1"
+  top: "cls_score_iter1"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "attention_score_iter1"
+  type: "Sigmoid"
+  bottom: "cls_score_iter1"
+  top: "attention_score_iter1"
+}
+layer {
+  name: "slicer_attention"
+  type: "Slice"
+  bottom: "attention_score_iter1"
+  top: 'part_attention1'
+  top: 'part_attention2'
+  top: 'part_attention3'
+  top: 'part_attention4'
+  top: 'part_attention5'
+  top: 'part_attention6'
+  top: 'part_attention7'
+  top: 'part_attention8'
+  top: 'part_attention9'
+  top: 'part_attention10'
+  top: 'part_attention11'
+  top: 'part_attention12'
+  top: 'part_attention13'
+  top: 'part_attention14'
+  top: 'part_attention15'
+  top: 'part_attention16'
+  top: 'part_attention17'
+  top: 'part_attention18'
+  top: 'part_attention19'
+  top: 'part_attention20'
+  top: 'part_attention21'
+  top: 'part_attention22'
+  top: 'part_attention23'
+  top: 'part_attention24'
+  top: 'part_attention25'
+  top: 'part_attention26'
+  top: 'part_attention27'
+  top: 'part_attention28'
+  top: 'part_attention29'
+  top: 'part_attention30'
+  slice_param {
+    axis: 0
+  }
+}
+
+####Flatten feature map to N*1*(C*H*W) in order to scale them
+layer {
+  name: "dim_red_conv5_flatten"
+  type: "Reshape"
+  bottom: "partroipair1_pool5"
+  top: "dim_red_conv5_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv6_flatten"
+  type: "Reshape"
+  bottom: "partroipair2_pool5"
+  top: "dim_red_conv6_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv7_flatten"
+  type: "Reshape"
+  bottom: "partroipair3_pool5"
+  top: "dim_red_conv7_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv8_flatten"
+  type: "Reshape"
+  bottom: "partroipair4_pool5"
+  top: "dim_red_conv8_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv9_flatten"
+  type: "Reshape"
+  bottom: "partroipair5_pool5"
+  top: "dim_red_conv9_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv10_flatten"
+  type: "Reshape"
+  bottom: "partroipair6_pool5"
+  top: "dim_red_conv10_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv11_flatten"
+  type: "Reshape"
+  bottom: "partroipair7_pool5"
+  top: "dim_red_conv11_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv12_flatten"
+  type: "Reshape"
+  bottom: "partroipair8_pool5"
+  top: "dim_red_conv12_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv13_flatten"
+  type: "Reshape"
+  bottom: "partroipair9_pool5"
+  top: "dim_red_conv13_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv14_flatten"
+  type: "Reshape"
+  bottom: "partroipair10_pool5"
+  top: "dim_red_conv14_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv15_flatten"
+  type: "Reshape"
+  bottom: "partroipair11_pool5"
+  top: "dim_red_conv15_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv16_flatten"
+  type: "Reshape"
+  bottom: "partroipair12_pool5"
+  top: "dim_red_conv16_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv17_flatten"
+  type: "Reshape"
+  bottom: "partroipair13_pool5"
+  top: "dim_red_conv17_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv18_flatten"
+  type: "Reshape"
+  bottom: "partroipair14_pool5"
+  top: "dim_red_conv18_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv19_flatten"
+  type: "Reshape"
+  bottom: "partroipair15_pool5"
+  top: "dim_red_conv19_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv20_flatten"
+  type: "Reshape"
+  bottom: "partroipair16_pool5"
+  top: "dim_red_conv20_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv21_flatten"
+  type: "Reshape"
+  bottom: "partroipair17_pool5"
+  top: "dim_red_conv21_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+}
+}
+layer {
+  name: "dim_red_conv22_flatten"
+  type: "Reshape"
+  bottom: "partroipair18_pool5"
+  top: "dim_red_conv22_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv23_flatten"
+  type: "Reshape"
+  bottom: "partroipair19_pool5"
+  top: "dim_red_conv23_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv24_flatten"
+  type: "Reshape"
+  bottom: "partroipair20_pool5"
+  top: "dim_red_conv24_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv25_flatten"
+  type: "Reshape"
+  bottom: "partroipair21_pool5"
+  top: "dim_red_conv25_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv26_flatten"
+  type: "Reshape"
+  bottom: "partroipair22_pool5"
+  top: "dim_red_conv26_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv27_flatten"
+  type: "Reshape"
+  bottom: "partroipair23_pool5"
+  top: "dim_red_conv27_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv28_flatten"
+  type: "Reshape"
+  bottom: "partroipair24_pool5"
+  top: "dim_red_conv28_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv29_flatten"
+  type: "Reshape"
+  bottom: "partroipair25_pool5"
+  top: "dim_red_conv29_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv30_flatten"
+  type: "Reshape"
+  bottom: "partroipair26_pool5"
+  top: "dim_red_conv30_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv31_flatten"
+  type: "Reshape"
+  bottom: "partroipair27_pool5"
+  top: "dim_red_conv31_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv32_flatten"
+  type: "Reshape"
+  bottom: "partroipair28_pool5"
+  top: "dim_red_conv32_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv33_flatten"
+  type: "Reshape"
+  bottom: "partroipair29_pool5"
+  top: "dim_red_conv33_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "dim_red_conv34_flatten"
+  type: "Reshape"
+  bottom: "partroipair30_pool5"
+  top: "dim_red_conv34_flatten"
+  reshape_param {
+  shape {
+    dim: 0
+    dim: 1 
+    dim: -1
+  }
+}
+}
+layer {
+  name: "partroi1_attention"
+  type: "Scale"
+  bottom: "dim_red_conv5_flatten"
+  bottom: "part_attention1"
+  top: "partroi1_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi2_attention"
+  type: "Scale"
+  bottom: "dim_red_conv6_flatten"
+  bottom: "part_attention2"
+  top: "partroi2_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi3_attention"
+  type: "Scale"
+  bottom: "dim_red_conv7_flatten"
+  bottom: "part_attention3"
+  top: "partroi3_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi4_attention"
+  type: "Scale"
+  bottom: "dim_red_conv8_flatten"
+  bottom: "part_attention4"
+  top: "partroi4_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi5_attention"
+  type: "Scale"
+  bottom: "dim_red_conv9_flatten"
+  bottom: "part_attention5"
+  top: "partroi5_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi6_attention"
+  type: "Scale"
+  bottom: "dim_red_conv10_flatten"
+  bottom: "part_attention6"
+  top: "partroi6_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi7_attention"
+  type: "Scale"
+  bottom: "dim_red_conv11_flatten"
+  bottom: "part_attention7"
+  top: "partroi7_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi8_attention"
+  type: "Scale"
+  bottom: "dim_red_conv12_flatten"
+  bottom: "part_attention8"
+  top: "partroi8_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi9_attention"
+  type: "Scale"
+  bottom: "dim_red_conv13_flatten"
+  bottom: "part_attention9"
+  top: "partroi9_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi10_attention"
+  type: "Scale"
+  bottom: "dim_red_conv14_flatten"
+  bottom: "part_attention10"
+  top: "partroi10_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi11_attention"
+  type: "Scale"
+  bottom: "dim_red_conv15_flatten"
+  bottom: "part_attention11"
+  top: "partroi11_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi12_attention"
+  type: "Scale"
+  bottom: "dim_red_conv16_flatten"
+  bottom: "part_attention12"
+  top: "partroi12_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi13_attention"
+  type: "Scale"
+  bottom: "dim_red_conv17_flatten"
+  bottom: "part_attention13"
+  top: "partroi13_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi14_attention"
+  type: "Scale"
+  bottom: "dim_red_conv18_flatten"
+  bottom: "part_attention14"
+  top: "partroi14_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi15_attention"
+  type: "Scale"
+  bottom: "dim_red_conv19_flatten"
+  bottom: "part_attention15"
+  top: "partroi15_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi16_attention"
+  type: "Scale"
+  bottom: "dim_red_conv20_flatten"
+  bottom: "part_attention16"
+  top: "partroi16_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi17_attention"
+  type: "Scale"
+  bottom: "dim_red_conv21_flatten"
+  bottom: "part_attention17"
+  top: "partroi17_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi18_attention"
+  type: "Scale"
+  bottom: "dim_red_conv22_flatten"
+  bottom: "part_attention18"
+  top: "partroi18_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi19_attention"
+  type: "Scale"
+  bottom: "dim_red_conv23_flatten"
+  bottom: "part_attention19"
+  top: "partroi19_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi20_attention"
+  type: "Scale"
+  bottom: "dim_red_conv24_flatten"
+  bottom: "part_attention20"
+  top: "partroi20_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi21_attention"
+  type: "Scale"
+  bottom: "dim_red_conv25_flatten"
+  bottom: "part_attention21"
+  top: "partroi21_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi22_attention"
+  type: "Scale"
+  bottom: "dim_red_conv26_flatten"
+  bottom: "part_attention22"
+  top: "partroi22_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi23_attention"
+  type: "Scale"
+  bottom: "dim_red_conv27_flatten"
+  bottom: "part_attention23"
+  top: "partroi23_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi24_attention"
+  type: "Scale"
+  bottom: "dim_red_conv28_flatten"
+  bottom: "part_attention24"
+  top: "partroi24_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi25_attention"
+  type: "Scale"
+  bottom: "dim_red_conv29_flatten"
+  bottom: "part_attention25"
+  top: "partroi25_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi26_attention"
+  type: "Scale"
+  bottom: "dim_red_conv30_flatten"
+  bottom: "part_attention26"
+  top: "partroi26_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi27_attention"
+  type: "Scale"
+  bottom: "dim_red_conv31_flatten"
+  bottom: "part_attention27"
+  top: "partroi27_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi28_attention"
+  type: "Scale"
+  bottom: "dim_red_conv32_flatten"
+  bottom: "part_attention28"
+  top: "partroi28_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi29_attention"
+  type: "Scale"
+  bottom: "dim_red_conv33_flatten"
+  bottom: "part_attention29"
+  top: "partroi29_attention"
+  scale_param {
+    axis: 0
+  }
+}
+layer {
+  name: "partroi30_attention"
+  type: "Scale"
+  bottom: "dim_red_conv34_flatten"
+  bottom: "part_attention30"
+  top: "partroi30_attention"
+  scale_param {
+    axis: 0
+  }
+}
+
+#####Reshape back to feature maps
+layer {
+  name: "partroi1_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi1_attention"
+  top: "partroi1_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi2_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi2_attention"
+  top: "partroi2_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi3_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi3_attention"
+  top: "partroi3_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi4_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi4_attention"
+  top: "partroi4_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi5_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi5_attention"
+  top: "partroi5_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi6_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi6_attention"
+  top: "partroi6_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi7_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi7_attention"
+  top: "partroi7_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi8_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi8_attention"
+  top: "partroi8_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi9_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi9_attention"
+  top: "partroi9_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi10_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi10_attention"
+  top: "partroi10_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi11_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi11_attention"
+  top: "partroi11_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi12_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi12_attention"
+  top: "partroi12_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi13_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi13_attention"
+  top: "partroi13_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi14_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi14_attention"
+  top: "partroi14_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi15_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi15_attention"
+  top: "partroi15_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi16_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi16_attention"
+  top: "partroi16_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi17_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi17_attention"
+  top: "partroi17_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi18_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi18_attention"
+  top: "partroi18_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi19_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi19_attention"
+  top: "partroi19_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0 
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi20_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi20_attention"
+  top: "partroi20_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi21_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi21_attention"
+  top: "partroi21_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi22_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi22_attention"
+  top: "partroi22_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0 
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi23_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi23_attention"
+  top: "partroi23_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi24_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi24_attention"
+  top: "partroi24_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi25_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi25_attention"
+  top: "partroi25_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi26_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi26_attention"
+  top: "partroi26_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi27_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi27_attention"
+  top: "partroi27_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi28_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi28_attention"
+  top: "partroi28_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi29_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi29_attention"
+  top: "partroi29_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+layer {
+  name: "partroi30_attention_reshape"
+  type: "Reshape"
+  bottom: "partroi30_attention"
+  top: "partroi30_attention_reshape"
+  reshape_param {
+    shape {
+      dim: 0
+      dim: -1
+      dim: 7
+      dim: 7 
+    }
+  }
+}
+
+layer {
+  name: "slicer_attention_vec"
+  type: "Concat"
+  bottom: 'part_attention1'
+  bottom: 'part_attention2'
+  bottom: 'part_attention3'
+  bottom: 'part_attention4'
+  bottom: 'part_attention5'
+  bottom: 'part_attention6'
+  bottom: 'part_attention7'
+  bottom: 'part_attention8'
+  bottom: 'part_attention9'
+  bottom: 'part_attention10'
+  bottom: 'part_attention11'
+  bottom: 'part_attention12'
+  bottom: 'part_attention13'
+  bottom: 'part_attention14'
+  bottom: 'part_attention15'
+  bottom: 'part_attention16'
+  bottom: 'part_attention17'
+  bottom: 'part_attention18'
+  bottom: 'part_attention19'
+  bottom: 'part_attention20'
+  bottom: 'part_attention21'
+  bottom: 'part_attention22'
+  bottom: 'part_attention23'
+  bottom: 'part_attention24'
+  bottom: 'part_attention25'
+  bottom: 'part_attention26'
+  bottom: 'part_attention27'
+  bottom: 'part_attention28'
+  bottom: 'part_attention29'
+  bottom: 'part_attention30'
+  top: "slicer_attention_vec"
+  concat_param {
+    axis: 1
+  }
+}
+
+layer {
+  name: 'select_pairs'
+  type: 'Python'
+  bottom: "slicer_attention_vec"
+  bottom: "partroi1_attention_reshape"
+  bottom: "partroi2_attention_reshape"
+  bottom: "partroi3_attention_reshape"
+  bottom: "partroi4_attention_reshape"
+  bottom: "partroi5_attention_reshape"
+  bottom: "partroi6_attention_reshape"
+  bottom: "partroi7_attention_reshape"
+  bottom: "partroi8_attention_reshape"
+  bottom: "partroi9_attention_reshape"
+  bottom: "partroi10_attention_reshape"
+  bottom: "partroi11_attention_reshape"
+  bottom: "partroi12_attention_reshape"
+  bottom: "partroi13_attention_reshape"
+  bottom: "partroi14_attention_reshape"
+  bottom: "partroi15_attention_reshape"
+  bottom: "partroi16_attention_reshape"
+  bottom: "partroi17_attention_reshape"
+  bottom: "partroi18_attention_reshape"
+  bottom: "partroi19_attention_reshape"
+  bottom: "partroi20_attention_reshape"
+  bottom: "partroi21_attention_reshape"
+  bottom: "partroi22_attention_reshape"
+  bottom: "partroi23_attention_reshape"
+  bottom: "partroi24_attention_reshape"
+  bottom: "partroi25_attention_reshape"
+  bottom: "partroi26_attention_reshape"
+  bottom: "partroi27_attention_reshape"
+  bottom: "partroi28_attention_reshape"
+  bottom: "partroi29_attention_reshape"
+  bottom: "partroi30_attention_reshape"
+  top: 'select_pair1' 
+  top: 'select_pair2' 
+  top: 'select_pair3'
+  top: 'select_pair4' 
+  top: 'select_pair5' 
+  top: 'select_pair6' 
+  top: 'select_pair7' 
+  top: 'select_pair8' 
+  top: 'select_pair9' 
+  top: 'select_pair10' 
+  top: 'select_pair11' 
+  top: 'select_pair12' 
+  top: 'select_pair13' 
+  top: 'select_pair14' 
+  top: 'select_pair15'
+  top: 'select_pair16' 
+  top: 'select_pair17' 
+  top: 'select_pair18'
+  top: 'select_pair19' 
+  top: 'select_pair20' 
+  top: 'select_pair21' 
+  top: 'select_pair22' 
+  top: 'select_pair23' 
+  top: 'select_pair24' 
+  top: 'select_pair25' 
+  top: 'select_pair26' 
+  top: 'select_pair27' 
+  top: 'select_pair28' 
+  top: 'select_pair29' 
+  top: 'select_pair30'
+  python_param {
+    module: 'select_layer'
+    layer: 'SelectLayer'
+    param_str: '{"top_k":30}'
+  }
+}
+
+layer {
+  name: "feat_concat1"
+  type: "Concat"
+  bottom: "humanroi_pool5"
+  bottom: "sceneroi_pool5"
+  bottom: "select_pair1"
+  bottom: "select_pair2"
+  bottom: "select_pair3"
+  bottom: "select_pair4"
+  bottom: "select_pair5"
+  bottom: "select_pair6"
+  bottom: "select_pair7"
+  bottom: "select_pair8"
+  bottom: "select_pair9"
+  bottom: "select_pair10"
+  bottom: "select_pair11"
+  bottom: "select_pair12"
+  bottom: "select_pair13"
+  bottom: "select_pair14"
+  bottom: "select_pair15"
+  bottom: "select_pair16"
+  bottom: "select_pair17"
+  bottom: "select_pair18"
+  bottom: "select_pair19"
+  bottom: "select_pair20"
+  bottom: "select_pair21"
+  bottom: "select_pair22"
+  bottom: "select_pair23"
+  bottom: "select_pair24"
+  bottom: "select_pair25"
+  bottom: "select_pair26"
+  bottom: "select_pair27"
+  bottom: "select_pair28"
+  bottom: "select_pair29"
+  bottom: "select_pair30"
+  top: "dim_red_feats1"
+  concat_param {
+    axis: 1
+  }
+}
+
+# normal fc6 and fc7
+layer {
+  name: "fc6"
+  type: "InnerProduct"
+  bottom: "dim_red_feats1"
+  top: "fc6"
+  param {
+    name: "fc6_w"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    name: "fc6_b"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu6"
+  type: "ReLU"
+  bottom: "fc6"
+  top: "fc6"
+}
+layer {
+  name: "drop6"
+  type: "Dropout"
+  bottom: "fc6"
+  top: "fc6"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7"
+  type: "InnerProduct"
+  bottom: "fc6"
+  top: "fc7"
+  param {
+    name: "fc7_w"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    name: "fc7_b"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu7"
+  type: "ReLU"
+  bottom: "fc7"
+  top: "fc7"
+}
+layer {
+  name: "drop7"
+  type: "Dropout"
+  bottom: "fc7"
+  top: "fc7"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score"
+  type: "InnerProduct"
+  bottom: "fc7"
+  top: "cls_score"
+  param {
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 600
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score"
+  type: "MIL"
+  bottom: "cls_score"
+  top: "mil_cls_score"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_pairs"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score"
+  bottom: "label"
+  bottom: "label_wts"
+  top: "loss_pairs"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+
+layer {
+        bottom: "mil_cls_score"
+        top: "predict"
+        name: "predict"
+        type: "Sigmoid"
+}
+
+layer {
+  name: "accuracy"
+  type: "MultiLabelAccuracy"
+  bottom: "predict"
+  bottom: "label"
+  top: "accuracy"
+}
+
+############################################# second stream predictions #################################################
+layer {
+  name: "feat_concat2"
+  type: "Concat"
+  bottom: "relroi1_pool5"
+  bottom: "relroi2_pool5"
+  bottom: "relroi3_pool5"
+  bottom: "relroi4_pool5"
+  bottom: "humanroi_pool5"
+  bottom: "sceneroi_pool5"
+  top: "dim_red_feats2"
+  concat_param {
+    axis: 1 
+  }
+}
+
+# normal fc6 and fc7
+layer {
+  name: "fc6_stream2"
+  type: "InnerProduct"
+
+  bottom: "dim_red_feats2"
+  top: "fc6_stream2"
+  
+  param {
+    name: "fc6_w_stream2"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    name: "fc6_b_stream2"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu6_stream2"
+  type: "ReLU"
+  bottom: "fc6_stream2"
+  top: "fc6_stream2"
+}
+layer {
+  name: "drop6_stream2"
+  type: "Dropout"
+  bottom: "fc6_stream2"
+  top: "fc6_stream2"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "fc7_stream2"
+  type: "InnerProduct"
+  bottom: "fc6_stream2"
+  top: "fc7_stream2"
+  param {
+    name: "fc7_w_stream2"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  param {
+    name: "fc7_b_stream2"
+    lr_mult: 0
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 4096
+  }
+}
+layer {
+  name: "relu7_stream2"
+  type: "ReLU"
+  bottom: "fc7_stream2"
+  top: "fc7_stream2"
+}
+layer {
+  name: "drop7_stream2"
+  type: "Dropout"
+  bottom: "fc7_stream2"
+  top: "fc7_stream2"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer {
+  name: "cls_score_stream2"
+  type: "InnerProduct"
+  bottom: "fc7_stream2"
+  top: "cls_score_stream2"
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  param {
+    lr_mult: 0   
+    decay_mult: 0
+  }
+  inner_product_param {
+    num_output: 600
+    weight_filler {
+      type: "gaussian"
+      std: 0.01
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+layer {
+  name: "mil_cls_score_stream2"
+  type: "MIL"
+  bottom: "cls_score_stream2"
+  top: "mil_cls_score_stream2"
+  mil_param {
+    context_per_roi: 3
+  }
+}
+layer {
+  name: "loss_stream2"
+  type: "SigmoidCrossEntropyLoss"
+  bottom: "mil_cls_score_stream2"
+  bottom: "label"
+  bottom: "label_wts"
+  top: "loss_new"
+  loss_param: {
+     ignore_label: -1
+     weight_positive: 10
+  }
+  include {
+    phase: TRAIN
+  }
+}
+
+layer {
+        bottom: "mil_cls_score_stream2"
+        top: "predict_stream2"
+        name: "predict_stream2"
+        type: "Sigmoid"
+}
+
+layer {
+  name: "accuracy_stream2"
+  type: "MultiLabelAccuracy"
+  bottom: "predict_stream2"
+  bottom: "label"
+  top: "accuracy_stream2"
+}
