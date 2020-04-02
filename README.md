@@ -18,7 +18,7 @@ HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpe
 ## Notion
 Here Activity2Vec and PaSta-R are our part state based modules, which operate action inferece based on part semantics different from previous instance semantics. For example, **Pairwise + HAKE-HICO pre-trained Activity2Vec + Linear PaSta-R** (the sixth row) achieves 45.9 mAP on HICO. More details can be found in our CVPR2020 paper: PaStaNet: Toward Human Activity Knowledge Engine.
 
-## [Models on HICO](https://github.com/DirtyHarryLYL/HAKE-Action-Priviate/tree/Image-level-HAKE-Action)
+## [Models on HICO](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Image-level-HAKE-Action)
 |Instance-level| +Activity2Vec | +PaSta-R | mAP | Few@1 | Few@5 | Few@10 |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 [R\*CNN](https://arxiv.org/pdf/1505.01197.pdf) | - | - | 28.5 | -| - | -|
@@ -36,7 +36,7 @@ Pairwise|HAKE-Large | Linear |**46.3** | 24.7 | **31.8** | **33.1**|
 Pairwise|HAKE-Large | Linear |**46.3** | 24.7 | **31.8** | **33.1**|
 Pairwise|GT-HAKE-HICO|Linear | **65.6** | **47.5** | **55.4** | **56.6** |
 
-## [Models on HICO-DET](https://github.com/DirtyHarryLYL/HAKE-Action-Priviate/tree/Instance-level-HAKE-action)
+## [Models on HICO-DET](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Instance-level-HAKE-action)
 
 **Using Object Detections from [iCAN](https://github.com/vt-vl-lab/iCAN)**
 |Instance-level| +Activity2Vec | +PaSta-R | Full(def) | Rare(def) | None-Rare(def)| Full(ko) | Rare(ko) | None-Rare(ko) |
@@ -48,7 +48,7 @@ Pairwise|GT-HAKE-HICO|Linear | **65.6** | **47.5** | **55.4** | **56.6** |
 |TIN | HAKE-Large |Linear| 22.65 | 21.17 | 23.09 | 24.53 | 23.00 | 24.99 |
 |TIN | GT-HAKE-HICO-DET |Linear|34.86 | 42.83 | 32.48 | 35.59 | 42.94 | 33.40| 
 
-## [Models on AVA](https://github.com/DirtyHarryLYL/HAKE-Action-Priviate/tree/Instance-level-HAKE-action) (Frame-based)
+## [Models on AVA](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Instance-level-HAKE-action) (Frame-based)
 |Method| +Activity2Vec | +PaSta-R|mAP |
 |:---:|:---:|:---:|:---:|
 |[AVA-TF-Baseline](http://research.google.com/ava/download.html)| -|-|11.4 |
