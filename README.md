@@ -4,7 +4,7 @@ HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpe
 
 #### **News**: We released the HAKE-HICO (image-level part state labels upon HICO) and HAKE-HICO-DET (instance-level part state labels upon HICO-DET). The corresponding data can be found here: [HAKE-Data](https://github.com/DirtyHarryLYL/HAKE).
 
-- paper is [here](https://arxiv.org/abs/2004.00945).
+- Paper is [here](https://arxiv.org/abs/2004.00945).
 - Our larger version HAKE-Large (>120K images, activity and part state labels) will be released soon. 
 - We are keep enriching the data and part states on more data and activities (e.g., upon AVA, more kinds of action categories, more rare actions, etc.). 
 - We will keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced version.
