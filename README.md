@@ -48,8 +48,8 @@ Pairwise|GT-HAKE-HICO|Linear | **65.6** | **47.5** | **55.4** | **56.6** |
 |[TIN](https://arxiv.org/pdf/1811.08264.pdf) |-|-| 17.03 | 13.42 | 18.11 | 19.17 | 15.51 | 20.26 |
 |iCAN | HAKE-HICO-DET|Linear| 19.61 | 17.29 | 20.30 | 22.10 | 20.46 | 22.59 |
 |TIN | HAKE-HICO-DET|Linear| 22.12 | 20.19 | 22.69 | 24.06 | 22.19 | 24.62 |
-|TIN | HAKE-Large |Linear| 22.65 | 21.17 | 23.09 | 24.53 | 23.00 | 24.99 |
-|TIN | GT-HAKE-HICO-DET |Linear|34.86 | 42.83 | 32.48 | 35.59 | 42.94 | 33.40| 
+|TIN | HAKE-Large |Linear| **22.65** | **21.17** | **23.09** | **24.53** | **23.00** | **24.99** |
+|TIN | GT-HAKE-HICO-DET |Linear|**34.86** | **42.83** | **32.48** | **35.59** | **42.94** | **33.40**| 
 
 ## [Models on AVA](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Instance-level-HAKE-Action) (Frame-based)
 |Method| +Activity2Vec | +PaSta-R|mAP |
@@ -64,10 +64,10 @@ Pairwise|GT-HAKE-HICO|Linear | **65.6** | **47.5** | **55.4** | **56.6** |
 ## Models on V-COCO
 |Method| +Activity2Vec | +PaSta-R|AP(role), Scenario 1 | AP(role), Scenario 2 |
 |:---:|:---:|:---:|:---:|:---:|
-|[iCAN](https://arxiv.org/pdf/1808.10437.pdf) |-|-                    | 45.3 | 52.4 |
-|[TIN](https://arxiv.org/pdf/1811.08264.pdf)  |-|-                    | 47.8 | 54.2 |
+|[iCAN](https://arxiv.org/pdf/1808.10437.pdf) |-|-| 45.3 | 52.4 |
+|[TIN](https://arxiv.org/pdf/1811.08264.pdf)  |-|-| 47.8 | 54.2 |
 |iCAN | HAKE-Large|Linear   | 49.2 | 55.6 |
-|TIN |HAKE-Large|Linear    | 51.0 | 57.5 |
+|TIN |HAKE-Large|Linear    | **51.0** | **57.5** |
 
 ## Training Details
 We first pre-train the Activity2Vec and PaSta-R with 156 activities and PaSta labels.
