@@ -1,12 +1,13 @@
 # HAKE-Action
-HAKE-Action is a project to open the SOTA action understanding studies based on our [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes reproduced SOTA models and their HAKE-enhanced versions, and paper is [here](https://arxiv.org/abs/2004.00945).
+HAKE-Action is a project to open the SOTA action understanding studies based on our [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes reproduced SOTA models and their HAKE-enhanced versions.
 HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, Liang Xu, Cewu Lu. Currently, it is manintained by Yong-Lu Li, Xinpeng Liu and Liang Xu.
 
 #### **News**: We released the HAKE-HICO (image-level part state labels upon HICO) and HAKE-HICO-DET (instance-level part state labels upon HICO-DET). The corresponding data can be found here: [HAKE-Data](https://github.com/DirtyHarryLYL/HAKE).
 
+- paper is [here](https://arxiv.org/abs/2004.00945).
 - Our larger version HAKE-Large (>120K images, activity and part state labels) will be released soon. 
 - We are keep enriching the data and part states on more data and activities (e.g., upon AVA, more kinds of action categories, more rare actions, etc.). 
-- We also plan to keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced version.
+- We will keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced version.
 
 ## [Data Mode](https://github.com/DirtyHarryLYL/HAKE)
 - **HAKE-HICO** (**PaStaNet\* mode** in [paper](https://arxiv.org/abs/2004.00945)): image-level, add the aggression of all part states in an image (belong to one or multiple active persons), compared with original [HICO](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are image-level human body part states.
