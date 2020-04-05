@@ -12,7 +12,7 @@ HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpe
 ## [Data Mode](https://github.com/DirtyHarryLYL/HAKE)
 - **HAKE-HICO** (**PaStaNet\* mode** in [paper](https://arxiv.org/abs/2004.00945)): image-level, add the aggression of all part states in an image (belong to one or multiple active persons), compared with original [HICO](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are image-level human body part states.
 
-- **HAKE-HICO-DET** (**PaStaNet\*** in [paper](https://arxiv.org/abs/2004.00945)):instance-level, add part states for each annotated persons of all images in [HICO-DET](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are instance-level human body part states.
+- **HAKE-HICO-DET** (**PaStaNet\*** in [paper](https://arxiv.org/abs/2004.00945)): instance-level, add part states for each annotated persons of all images in [HICO-DET](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are instance-level human body part states.
 
 - **HAKE-Large** (**PaStaNet** in [paper](https://arxiv.org/abs/2004.00945)): contains more than 120K images, action labels and the corresponding part state labels. The images come from the existing action datasets and crowdsourcing. We mannully annotated all the active persons with our novel part-level semantics.
 
