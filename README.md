@@ -7,7 +7,7 @@ HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpe
 - Paper is [here](https://arxiv.org/abs/2004.00945).
 - Our larger version HAKE-Large (>120K images, activity and part state labels) will be released soon. 
 - We are keep enriching the data and part states on more data and activities (e.g., upon AVA, more kinds of action categories, more rare actions, etc.). 
-- We will keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced version.
+- We will keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced versions.
 
 ## [Data Mode](https://github.com/DirtyHarryLYL/HAKE)
 - **HAKE-HICO** (**PaStaNet\* mode** in [paper](https://arxiv.org/abs/2004.00945)): image-level, add the aggression of all part states in an image (belong to one or multiple active persons), compared with original [HICO](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are image-level human body part states.
