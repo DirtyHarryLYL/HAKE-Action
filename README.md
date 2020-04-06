@@ -1,4 +1,4 @@
-# Image-level HAKE-Action(Caffe)
+# Image-level HAKE-Action
 Our architecture for image-level experiment is based on [Caffe](https://github.com/BVLC/caffe).
 
 For details of the network design, please refer to our paper **PaStaNet: Toward Human Activity Knowledge Engine**.
