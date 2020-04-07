@@ -21,6 +21,11 @@ HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpe
 ## Notion
 Activity2Vec and PaSta-R are our part state based modules, which operate action inference based on part semantics, different from previous instance semantics. For example, **Pairwise + HAKE-HICO pre-trained Activity2Vec + Linear PaSta-R** (the seventh row) achieves 45.9 mAP on HICO. More details can be found in our CVPR2020 paper: [PaStaNet: Toward Human Activity Knowledge Engine](https://arxiv.org/abs/2004.00945).
 
+## Code
+- [Image-level Action Recognition](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Image-level-HAKE-Action)
+
+- [Instance-level Action Detection](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Instance-level-HAKE-Action)
+
 ## [Models on HICO](https://github.com/DirtyHarryLYL/HAKE-Action/tree/Image-level-HAKE-Action)
 |Instance-level| +Activity2Vec | +PaSta-R | mAP | Few@1 | Few@5 | Few@10 |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
