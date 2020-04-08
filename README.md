@@ -110,11 +110,10 @@ Pretrain-model | [link](https://drive.google.com/open?id=1iZIE1rNDTNSaGQZcCTAyz1
 ## Citation
 If you find this work useful, please consider citing:
 ```
-@inproceedings{li2020pastanet,
+@article{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
-  author={},
-  booktitle={},
-  pages={},
+  author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
+  journal={arXiv preprint arXiv:2004.00945},
   year={2020}
 }
 ```
