@@ -131,6 +131,14 @@ If you find this work useful, please consider citing:
   year={2020}
 }
 ```
+
+## TODOS
+- [x] Instance-level label results on HICO-DET and AVA
+- [x] Instance-level code and models
+- [ ] HAKE-Large data, code and models
+- [ ] HAKE-AVA data and code (video-based)
+- [ ] Whole pipeline to process your own images, including detection, pose estimation, part box generation and HAKE-based HOI detection.
+
 ## Acknowledgement
 
 Some of the codes are built upon [Interactiveness](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network) and [iCAN](https://github.com/vt-vl-lab/iCAN). 
