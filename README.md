@@ -137,7 +137,7 @@ If you find this work useful, please consider citing:
 - [x] Instance-level code and models
 - [ ] HAKE-Large data, code and models
 - [ ] HAKE-AVA data and code (video-based)
-- [ ] Whole pipeline to process your own images, including detection, pose estimation, part box generation and HAKE-based HOI detection.
+- [ ] Demo to process your own images, including detection, pose estimation, part box generation and HAKE-based HOI detection.
 
 ## Acknowledgement
 
