@@ -52,7 +52,7 @@ During Activity2Vec and PaSta-R pre-training, the V-COCO data in HAKE are all ex
 git clone -b Instance-level-HAKE-action https://github.com/DirtyHarryLYL/HAKE-Action.git
 ```
 
-2.Download dataset and pre-trained weight. (The detection results (person and object boudning boxes) are collected from: iCAN: Instance-Centric Attention Network for Human-Object Interaction Detection [[website]](http://chengao.vision/iCAN/).) And the part bounding boxes have been attached to the detection results. And we show how to generate part bounding boxes with human bounding box and pose in [script/part_box_generation.py](https://github.com/DirtyHarryLYL/HAKE-Action/blob/Instance-level-HAKE-Action/script/part_box_generation.py).
+2.Download **dataset** and **pre-trained weights**. The detection results (person and object boudning boxes) are collected from [iCAN](http://chengao.vision/iCAN/).) And the part bounding boxes have been attached to the detection results. We show how to generate part bounding boxes with human bounding box and pose in [script/part_box_generation.py](https://github.com/DirtyHarryLYL/HAKE-Action/blob/Instance-level-HAKE-Action/script/part_box_generation.py).
 
 ```
 chmod +x ./script/Dataset_download.sh 
