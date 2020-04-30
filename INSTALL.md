@@ -18,7 +18,7 @@
 #### 1. Clone the code
 
 ```
-git clone -b Image-level-HAKE-Action //github.com/DirtyHarryLYL/HAKE-Action.git
+git clone -b Image-level-HAKE-Action https://github.com/DirtyHarryLYL/HAKE-Action.git
 cd HAKE-Action
 ```
 
