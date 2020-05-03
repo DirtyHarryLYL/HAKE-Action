@@ -65,6 +65,12 @@ python -c "import caffe"
 You can refer to [this website](https://caffe.berkeleyvision.org/install_apt.html) for detailed instructions.
 
 
-#### 4. (Optional) Build from Docker(TODO)
+#### 4. (Optional) Build from Docker
 
+Our caffe environment is open-sourced at [https://hub.docker.com/r/liangxuy/hoi-caffe](https://hub.docker.com/r/liangxuy/hoi-caffe). You can use the following commands to build the environment.
 
+```
+docker pull liangxuy/hoi-caffe
+docker run -ti liangxuy/hoi-caffe
+cd /opt/HAKE-Action/
+```
