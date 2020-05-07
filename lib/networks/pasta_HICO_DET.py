@@ -482,9 +482,9 @@ class ResNet50():
             if cfg.TRAIN_MODULE == 1:
                 loss = A_cross_entropy + L_cross_entropy + P_cross_entropy + PaSta_cross_entropy + vec_cross_entropy + verb_cross_entropy
             elif cfg.TRAIN_MODULE == 2:
-                loss = PaSta_cross_entropy + vec_cross_entropy
+                loss = (A_cross_entropy + L_cross_entropy + P_cross_entropy + verb_cross_entropy) * 0 + PaSta_cross_entropy + vec_cross_entropy
             elif cfg.TRAIN_MODULE == 3:
-                loss = A_cross_entropy + L_cross_entropy + P_cross_entropy + verb_cross_entropy
+                loss = A_cross_entropy + L_cross_entropy + P_cross_entropy + verb_cross_entropy + (PaSta_cross_entropy + vec_cross_entropy) * 0
 
             self.losses['total_loss'] = loss
             self.event_summaries.update(self.losses)
