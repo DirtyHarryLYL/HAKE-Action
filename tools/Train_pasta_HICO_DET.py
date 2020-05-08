@@ -74,7 +74,7 @@ if __name__ == '__main__':
         weight    = cfg.ROOT_DIR + '/Weights/' + args.model + '/HOI_iter_%d.ckpt' % args.iter # from previous_ckpt
     else:
         if cfg.TRAIN_INIT_WEIGHT == 1:   # pretrain on full PaStaNet or train on HICO-DET
-            weight    = cfg.ROOT_DIR + '/Weights/faster_rcnn_resnet101_coco_2018_01_28/model.ckpt' # from faster R-CNN
+            weight    = cfg.ROOT_DIR + '/Weights/res50_faster_rcnn_iter_1190000.ckpt' # from faster R-CNN
         elif cfg.TRAIN_INIT_WEIGHT == 2: # finetune on HICO-DET
             weight    = cfg.ROOT_DIR + '/Weights/pretrain_for_HICO_DET/model.ckpt'
     
