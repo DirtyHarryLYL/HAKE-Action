@@ -1,4 +1,4 @@
-# Instance-level-HAKE-action
+# Instance-level-HAKE-Action
 Code for our CVPR2020 paper *"PaStaNet: Toward Human Activity Knowledge Engine"*.
 
 Link: [[arXiv]]()
@@ -49,7 +49,7 @@ During Activity2Vec and PaSta-R pre-training, the V-COCO data in HAKE are all ex
 1.Clone this repository.
 
 ```
-git clone -b Instance-level-HAKE-action https://github.com/DirtyHarryLYL/HAKE-Action.git
+git clone -b Instance-level-HAKE-Action https://github.com/DirtyHarryLYL/HAKE-Action.git
 ```
 
 2.Download **dataset** and **pre-trained weights**. The detection results (person and object boudning boxes) are collected from [iCAN](http://chengao.vision/iCAN/).) And the part bounding boxes have been attached to the detection results. We show how to generate part bounding boxes with human bounding box and pose in [script/part_box_generation.py](https://github.com/DirtyHarryLYL/HAKE-Action/blob/Instance-level-HAKE-Action/script/part_box_generation.py).
@@ -91,12 +91,12 @@ python tools/Train_pasta_AVA.py --init_weight 3 --num_iteration 2000000 --model 
 1.Test on HICO-DET
 
 ```
-python tools/Test_pasta_HICO_DET.py --num_iteration 10 --model <pasta_HICO-DET for PaStaNet*, pasta_full for PaStaNet>
+python tools/Test_pasta_HICO_DET.py --iteration 2000000 --model <pasta_HICO-DET for PaStaNet*, pasta_full for PaStaNet>
 ```
 
 2. Test on AVA
 ```
-python tools/Test_pasta_HICO_DET.py --num_iteration 1100000 --model pasta_AVA_transfer
+python tools/Test_pasta_HICO_DET.py --iteration 1100000 --model pasta_AVA_transfer
 ```
 
 
