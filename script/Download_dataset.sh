@@ -21,3 +21,5 @@ python script/Download_data.py 1h0InSjxCffLuyoXEPbLIzOH0KVWUuUJc Weights/pasta_A
 python script/Download_data.py 1l12Dr217NeTnbBA5e-9lLetMFmDv7eI9 Weights/pasta_HICO-DET.zip
 python script/Download_data.py 1_O8eo1fmJtVzb_W5Y4emg_eE7LTJKPGR Results.tar.gz
 python script/Download_data.py 1_ubvIeBVIBT2-M0taN4ytf72B5xx0JR7 lib/ult/matrix_sentence_76.py
+
+ln -s ./-Results/HICO_DET_utils.py ./lib/ult/HICO_DET_utils.py
