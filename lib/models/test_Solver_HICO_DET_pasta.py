@@ -5,7 +5,7 @@ from __future__ import print_function
 
 from ult.config import cfg
 from ult.timer import Timer
-from ult.ult import Get_next_sp_with_pose, Generate_part_bbox, Generate_relation_bbox, Generate_action_object
+from ult.ult_HICO_DET import Get_next_sp_with_pose, Generate_part_bbox, Generate_relation_bbox, Generate_action_object
 from ult.HICO_DET_utils import obj_range, get_map
 
 import cPickle as pickle
@@ -99,7 +99,7 @@ def test_net(sess, net, Test_RCNN, output_dir):
  
         image_id   = int(line[-9:-4])
         
-        im_detect(sess, net, image_id, Test_RCNN, keys, scores, bboxes, hdet, odet)
+        im_detect(sess, net, image_id, Test_RCNN, keys, scores_P, scores_A, scores_L, bboxes, hdet, odet)
 
         _t['im_detect'].toc()
 
