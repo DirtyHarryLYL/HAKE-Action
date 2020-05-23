@@ -1,7 +1,9 @@
 # Image-level HAKE-Action
-Our architecture for image-level experiment is based on [Caffe](https://github.com/BVLC/caffe). The docker version is coming soon.
+Our architecture for image-level experiment is based on [Caffe](https://github.com/BVLC/caffe).
 
 For details of the network design, please refer to our paper **PaStaNet: Toward Human Activity Knowledge Engine**.
+
+The [docker version](https://hub.docker.com/r/liangxuy/hoi-caffe) is also released. More details please refer to [INSTALL.md](./INSTALL.md)
 
 ## Results on HICO
 
