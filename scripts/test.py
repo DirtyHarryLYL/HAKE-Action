@@ -3,7 +3,7 @@ import os
 import os.path as osp
 from test_before_mil import test_one_caffemodel
 from obj_mask import obj_mask_func
-from obj_mas import prior_info
+from obj_mask import prior_info
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--pasta-mode', type=str, default='linear', help='linear/mlp/seq/gcn/tree')
@@ -34,28 +34,28 @@ elif args.pasta_mode == 'tree':
 
 # 10v_attention
 if not osp.exists('results/10v-attention/10v-attention.csv'):
-    test_one_caffemodel('models/10v_attention/deploy_10v_attention.prototxt', 'snaps/10v-attention.caffemodel.h5', 'results/10v-attention/', '10v', '10v-attention')
+    test_one_caffemodel('models/10v_attention/deploy_10v_attention.prototxt', 'snaps/10v_attention.caffemodel.h5', 'results/10v-attention/', '10v', '10v-attention')
     obj_mask_func('results/10v-attention/10v-attention.csv')
 
 # Language-Models
 if not osp.exists('results/language-model/language-model.csv'):
-    test_one_caffemodel('models/Language-Models/deploy_language-model.prototxt', 'snaps/language-model.caffemodel.h5', 'results/language-model/', 'pvp', 'language-model')
+    test_one_caffemodel('models/Language-Models/deploy_language-model.prototxt', 'snaps/language_model.caffemodel.h5', 'results/language-model/', 'pvp', 'language-model')
     obj_mask_func('results/language-model/language-model.csv')
 
 
 # Fuse the results
-if args.mode == 'linear':
+if args.pasta_mode == 'linear':
     os.system('python scripts/fuse.py results/Pasta-Linear/Pasta-Linear.csv results/10v-attention/10v-attention.csv results/pairwise.csv results/language-model/language-model.csv')
     prior_info('./results/fused.csv', './data/hico/object80.csv', './data/hico/verb117.csv', 800, 50, './results/linear_final.csv')
-elif args.mode == 'mlp':
+elif args.pasta_mode == 'mlp':
     os.system('python scripts/fuse.py results/Pasta-MLP/Pasta-MLP.csv results/10v-attention/10v-attention.csv results/pairwise.csv results/language-model/language-model.csv')
     prior_info('./results/fused.csv', './data/hico/object80.csv', './data/hico/verb117.csv', 800, 50, './results/mlp_final.csv')
-elif args.mode == 'seq':
+elif args.pasta_mode == 'seq':
     os.system('python scripts/fuse.py results/Pasta-Seq/Pasta-Seq.csv results/10v-attention/10v-attention.csv results/pairwise.csv results/language-model/language-model.csv')
     prior_info('./results/fused.csv', './data/hico/object80.csv', './data/hico/verb117.csv', 800, 50, './results/seq_final.csv')
-elif args.mode == 'gcn':
+elif args.pasta_mode == 'gcn':
     os.system('python scripts/fuse.py results/Pasta-GCN/Pasta-GCN.csv results/10v-attention/10v-attention.csv results/pairwise.csv results/language-model/language-model.csv')
     prior_info('./results/fused.csv', './data/hico/object80.csv', './data/hico/verb117.csv', 800, 50, './results/gcn_final.csv')
-elif args.mode == 'tree':
+elif args.pasta_mode == 'tree':
     os.system('python scripts/fuse.py results/Pasta-GCN/Pasta-GCN.csv results/10v-attention/10v-attention.csv results/pairwise.csv results/language-model/language-model.csv')
     prior_info('./results/fused.csv', './data/hico/object80.csv', './data/hico/verb117.csv', 800, 50, './results/tree_final.csv')
