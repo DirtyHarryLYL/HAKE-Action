@@ -356,7 +356,7 @@ class ResNet50():
 
         head       = self.image_to_head(is_training) 
         pool5_H    = self.crop_pool_layer(head, self.H_boxes, 'Crop_H') 
-        pool5_O    = self.crop_pool_layer(head, self.H_boxes, 'Crop_O') 
+        pool5_O    = self.crop_pool_layer(head, self.O_boxes, 'Crop_O') 
         pool5_R    = self.crop_pool_layer(head, self.R_boxes, 'Crop_R') 
 
         fc5_H, fc5_R = self.res5(pool5_H, pool5_R, is_training, name='res5_HR')
