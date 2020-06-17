@@ -21,7 +21,7 @@ Link: [[arXiv]]()
 |TIN + HAKE-HICO-DET| 22.12 | 20.19 | 22.69 | 24.06 | 22.19 | 24.62 |
 |TIN + HAKE-Large | 22.65 | 21.17 | 23.09 | 24.53 | 23.00 | 24.99 |
 
-**Our results on AVA dataset, using detections from LFB**
+**Our results (frame-based w/o temporal supervision) on AVA dataset, using detections from LFB**
 
 |Method| mAP |
 |:---:|:---:|
