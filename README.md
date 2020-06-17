@@ -119,6 +119,15 @@ python Evaluate_HICO_DET.py --file <detection file to be evaluated>
 
 2. For AVA, we use the official evaluation code of AVA dataset.
 
+### Q&A
+
+Q: Are all the three branches in PaStaNet (PaSta branch, attention branch, language branch) necessary?
+
+A: To get the best performance, they are all necessary. But the three branches in our model can be trained separately or jointly, thus it's easy to combine any of our branches with other state-of-the-art models to exploit the advantage of different branches in PaStaNet. For example, the language branch improves the upper bound significantly, while the attention branch plays an important role in joint training and improving the PaSta classification.
+
+Q: Where does the `P_H, P_O, P_sp` in HICO-DET evaluation come from?
+
+A: The are extracted from [TIN](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network). Feel free to replace them with the output of other models.
 
 ## Citation
 If you find this work useful, please consider citing:
