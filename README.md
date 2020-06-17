@@ -127,7 +127,7 @@ A: To get the best performance, they are all necessary. But the three branches i
 
 Q: Where does the `P_H, P_O, P_sp` in HICO-DET evaluation come from?
 
-A: The are extracted from [TIN](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network). Feel free to replace them with the output of other models.
+A: They are extracted from [TIN](https://github.com/DirtyHarryLYL/Transferable-Interactiveness-Network). Feel free to replace them with the output of other models (with same input boxes), which would bring higher performances. We are also working on the combination of HAKE and recent sota models in new framework (faster training and higher perfromance). Once finished, we will release them in this repo.
 
 ## Citation
 If you find this work useful, please consider citing:
@@ -143,7 +143,7 @@ If you find this work useful, please consider citing:
 ## TODOS
 - [x] Instance-level label results on HICO-DET and AVA
 - [x] Instance-level code and models
-- [ ] HAKE-Large data, code and models
+- [x] HAKE-Large data, code and models
 - [ ] HAKE-AVA data and code (video-based)
 - [ ] Demo to process your own images, including detection, pose estimation, part box generation and HAKE-based HOI detection.
 
