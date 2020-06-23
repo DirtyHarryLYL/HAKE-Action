@@ -6,11 +6,11 @@ Link: [[arXiv]](https://arxiv.org/abs/2004.00945)
 ## Results on HICO-DET, AVA and VCOCO
 
 ### [Data Mode](https://github.com/DirtyHarryLYL/HAKE)
-- **HAKE-HICO-DET** (**PaStaNet\*** in [paper]()):instance-level, add part states for each annotated persons of all images in [HICO-DET](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are instance-level human body part states.
+- **HAKE-HICO-DET** (**PaStaNet\*** in [paper](https://arxiv.org/abs/2004.00945)):instance-level, add part states for each annotated persons of all images in [HICO-DET](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are instance-level human body part states.
 
-- **HAKE-Large** (**PaStaNet** in [paper]()): contains more than 120K images, action labels and the corresponding part state labels. The images come from the existing action datasets and crowdsourcing. We mannully annotated all the active persons with our novel part-level semantics.
+- **HAKE-Large** (**PaStaNet** in [paper](https://arxiv.org/abs/2004.00945)): contains more than 120K images, action labels and the corresponding part state labels. The images come from the existing action datasets and crowdsourcing. We mannully annotated all the active persons with our novel part-level semantics.
 
-- **GT-HAKE-HICO-DET** (**GT-PaStaNet\*** in [paper]()): means that if we use the part state labels as the part stat prediction. That is, we can **perfectly** estimate the body part states of a person. Then use then to infer the instance activities. This mode can be seen as the **upper bound** of our HAKE-Action. From the results below we can find that, the upper bound is far beyond the SOTA performance. Thus, except for the current study on the conventional instance-level method, continue promoting **part-level** method based on HAKE would be a very promising direction.
+- **GT-HAKE-HICO-DET** (**GT-PaStaNet\*** in [paper](https://arxiv.org/abs/2004.00945)): means that if we use the part state labels as the part stat prediction. That is, we can **perfectly** estimate the body part states of a person. Then use then to infer the instance activities. This mode can be seen as the **upper bound** of our HAKE-Action. From the results below we can find that, the upper bound is far beyond the SOTA performance. Thus, except for the current study on the conventional instance-level method, continue promoting **part-level** method based on HAKE would be a very promising direction.
 
 **Our results on HICO-DET dataset, using object detections from iCAN**
 
