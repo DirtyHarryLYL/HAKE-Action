@@ -88,7 +88,7 @@ If you find our work useful, please consider citing:
 @article{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
   author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
-  journal={arXiv preprint arXiv:2004.00945},
+  journal={CVPR},
   year={2020}
 }
 
