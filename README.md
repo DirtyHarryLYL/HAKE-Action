@@ -132,10 +132,10 @@ A: They are extracted from [TIN](https://github.com/DirtyHarryLYL/Transferable-I
 ## Citation
 If you find this work useful, please consider citing:
 ```
-@article{li2020pastanet,
+@inproceedings{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
-  author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
-  journal={arXiv preprint arXiv:2004.00945},
+  author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-Shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
+  booktitle={CVPR},
   year={2020}
 }
 ```
