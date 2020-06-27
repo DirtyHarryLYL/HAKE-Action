@@ -84,6 +84,11 @@ You can use the following scripts to test the models. ```pasta-mode``` can be ``
 python scripts/test.py --pasta-mode linear
 ```
 
+For HAKE-Large data, you can add parameter ```--data large``` as:
+
+```
+python scripts/test.py --pasta-mode linear --data large
+```
 
 
 ## Train
@@ -91,6 +96,12 @@ You can use the following scripts to train the models.
 
 ```
 python scripts/train.py --pasta-mode linear
+```
+
+For HAKE-Large data, you can add parameter ```--data large``` as:
+
+```
+python scripts/train.py --pasta-mode linear --data large
 ```
 
 You can paste the code of train_xxx.prototxt in [models](./models) to [http://ethereon.github.io/netscope/#/editor](http://ethereon.github.io/netscope/#/editor) to visualize the networks.
