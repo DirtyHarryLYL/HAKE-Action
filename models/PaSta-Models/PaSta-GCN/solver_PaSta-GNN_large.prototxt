@@ -1,0 +1,26 @@
+net: "models/PaSta-Models/PaSta-GCN/train_PaSta-GNN_large.prototxt"
+base_lr: 0.000001
+lr_policy: "cosine"
+gamma: 0.1
+test_interval: 200000
+test_iter: 2000
+stepsize: 30000
+display: 20
+average_loss: 100
+max_iter: 100000
+iter_size: 16
+momentum: 0.9
+weight_decay: 0.0005
+#cos lr
+train_size: 104297
+multfactor: 2
+te: 2
+tenext: 2
+# We disable standard caffe solver snapshotting and implement our own snapshot
+# function
+snapshot: 10000
+# We still use the snapshot prefix, though
+snapshot_prefix: "snaps/PaSta-GCN_large"
+test_initialization: false
+# debug_info: true
+snapshot_format: HDF5

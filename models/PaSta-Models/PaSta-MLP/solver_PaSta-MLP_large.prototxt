@@ -1,0 +1,21 @@
+net: "models/PaSta-Models/PaSta-MLP/train_PaSta-MLP_large.prototxt"
+base_lr: 0.00001 #0.00001
+lr_policy: "step"
+gamma: 0.1
+test_interval: 140000
+test_iter: 2000
+stepsize: 30000
+display: 20
+average_loss: 100
+max_iter: 100000
+iter_size: 16
+momentum: 0.9
+weight_decay: 0.0005
+# We disable standard caffe solver snapshotting and implement our own snapshot
+# function
+snapshot: 10000
+# We still use the snapshot prefix, though
+snapshot_prefix: "snaps/PaSta-MLP_large"
+test_initialization: false
+# debug_info: true
+snapshot_format: HDF5

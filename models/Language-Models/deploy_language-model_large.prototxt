@@ -1,113 +1,160 @@
-name: "VGG_ILSVRC_16_layers"
-layer {
-  name: 'data'
-  type: 'Python'
-  top: 'data'
-  top: 'human_roi'
-  top: 'obj1_roi'
-  top: 'obj2_roi'
-  top: 'obj3_roi'
-  top: 'obj4_roi'
-  top: 'rel1_roi'
-  top: 'rel2_roi'
-  top: 'rel3_roi'
-  top: 'rel4_roi'
-  top: 'scene_roi'
-  top: 'label'
-  top: 'part_roi' #N = M people * K parts 
-  top: 'label_wts'
-  top: 'human_prior'
-  top: 'hp_list'
-  top: 'hp_list_wts'
-  ######################## pvp and wts
-  top: 'pvp_ankle2'
-  top: 'pvp_ankle2_wts'
-  top: 'pvp_knee2'
-  top: 'pvp_knee2_wts'
-  top: 'pvp_hip'
-  top: 'pvp_hip_wts'
-  top: 'pvp_hand2'
-  top: 'pvp_hand2_wts'
-  top: 'pvp_shoulder2'
-  top: 'pvp_shoulder2_wts'
-  top: 'pvp_head'
-  top: 'pvp_head_wts'
-  top: 'pvp_wts'
-  ########################117 verb and 80 object
-  top: 'verb_list'
-  top: 'verb_list_wts'
-  top: 'object_list'
-  top: 'object_list_wts'
- ######################## language
-  top: 'language_pvp_55'
-  top: 'language_hoi'
-  top: 'language_obj'
- ####################### detection object list (1, 80)
-  top: 'det_object_list'
-  python_param {
-    module: 'HOI_data_layer-language'
-    layer: 'HOIDataLayer'
-    param_str: '{"batch_size":1,"max_size":640, "root":"./data/hico/","list_file":"./data/hico/train_filelist.txt"}'
-  }
-  include {
-    phase: TRAIN
-  }
+input: "data"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 640
+  dim: 640
+}
+
+input: "human_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "scene_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "obj1_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "rel1_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "obj2_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "rel2_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+input: "obj3_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "rel3_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+input: "obj4_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+input: "rel4_roi"
+input_shape {
+  dim: 3 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+input: "part_roi"
+input_shape {
+  dim: 30 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+input: "human_prior"
+input_shape {
+  dim: 30 # to be changed on-the-fly to num ROIs
+  dim: 5 # [batch ind, x1, y1, x2, y2] zero-based indexing
+}
+
+
+input: "pvp_ankle2"
+input_shape {
+  dim: 1
+  dim: 6 
+}
+
+input: "pvp_knee2"
+input_shape {
+  dim: 1
+  dim: 6 
+}
+
+input: "pvp_hip"
+input_shape {
+  dim: 1
+  dim: 3 
+}
+
+input: "pvp_hand2"
+input_shape {
+  dim: 1
+  dim: 23
+}
+
+input: "pvp_shoulder2"
+input_shape {
+  dim: 1
+  dim: 5
+}
+
+input: "pvp_head"
+input_shape {
+  dim: 1
+  dim: 12 
+}
+
+input: "language_pvp_55"
+input_shape {
+  dim: 1
+  dim: 55 
+  dim: 2304
+}
+
+input: "language_hoi"
+input_shape {
+  dim: 1
+  dim: 600 
+  dim: 2304
+}
+
+input: "language_obj"
+input_shape {
+  dim: 1
+  dim: 80 
+  dim: 768
+}
+
+input: "det_object_list"
+input_shape {
+  dim: 1
+  dim: 80 
+}
+
+input: "label"
+input_shape {
+  dim: 1 # to be changed on-the-fly to num ROIs
+  dim: 600 # [batch ind, x1, y1, x2, y2] zero-based indexing
 }
 
 layer {
-  name: 'data'
-  type: 'Python'
-  top: 'data'
-  top: 'human_roi'
-  top: 'obj1_roi'
-  top: 'obj2_roi'
-  top: 'obj3_roi'
-  top: 'obj4_roi'
-  top: 'rel1_roi'
-  top: 'rel2_roi'
-  top: 'rel3_roi'
-  top: 'rel4_roi'
-  top: 'scene_roi'
-  top: 'label'
-  top: 'part_roi'#N = M people * K parts 
-  top: 'label_wts'
-  top: 'human_prior'
-  top: 'hp_list'
-  top: 'hp_list_wts'
-  ######################## pvp and wts
-  top: 'pvp_ankle2'
-  top: 'pvp_ankle2_wts'
-  top: 'pvp_knee2'
-  top: 'pvp_knee2_wts'
-  top: 'pvp_hip'
-  top: 'pvp_hip_wts'
-  top: 'pvp_hand2'
-  top: 'pvp_hand2_wts'
-  top: 'pvp_shoulder2'
-  top: 'pvp_shoulder2_wts'
-  top: 'pvp_head'
-  top: 'pvp_head_wts'
-  top: 'pvp_wts'
-  ########################117 verb and 80 object
-  top: 'verb_list'
-  top: 'verb_list_wts'
-  top: 'object_list'
-  top: 'object_list_wts'
- ######################## language
-  top: 'language_pvp_55'
-  top: 'language_hoi'
-  top: 'language_obj'
- ####################### detection object list (1, 80)
-  top: 'det_object_list'
-  python_param {
-    module: 'HOI_data_layer-language'
-    layer: 'HOIDataLayer'
-    param_str: '{"batch_size":1,"max_size":640,"root":"./data/hico/","list_file":"./data/hico/test_filelist.txt"}'
-  }
-  include {
-    phase: TEST
-  }
+  name: "label_s"
+  type: "Silence"
+  bottom: "label"
 }
+layer {
+  name: "language_hoi_s"
+  type: "Silence"
+  bottom: "language_hoi"
+}
+
 layer {
   name: "conv1_1"
   type: "Convolution"
@@ -683,8 +730,6 @@ layer {
   }
 }
 
-
-
 layer {
   name: "humanroi_pool5"
   type: "ROIPooling"
@@ -716,36 +761,6 @@ layer {
   name: "obj4_roi_s"
   type: "Silence"
   bottom: "obj4_roi"
-}
-layer {
-  name: "hp_list_s"
-  type: "Silence"
-  bottom: "hp_list"
-}
-layer {
-  name: "hp_list_wts_s"
-  type: "Silence"
-  bottom: "hp_list_wts"
-}
-layer {
-  name: "object_list_s"
-  type: "Silence"
-  bottom: "object_list"
-}
-layer {
-  name: "object_list_wts_s"
-  type: "Silence"
-  bottom: "object_list_wts"
-}
-layer {
-  name: "language_hoi_s"
-  type: "Silence"
-  bottom: "language_hoi"
-}
-layer {
-  name: "pvp_wts_s"
-  type: "Silence"
-  bottom: "pvp_wts"
 }
 
 layer {
@@ -1440,34 +1455,12 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_feet"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_feet"
-  bottom: "pvp_ankle2"
-  bottom: "pvp_ankle2_wts"
-  top: "loss_feet"
-  loss_weight: 14.5
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
+
 layer {
         bottom: "mil_cls_score_feet"
         top: "predict_feet"
         name: "predict_feet"
         type: "Sigmoid"
-}
-layer {
-  name: "accuracy_feet"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_feet"
-  bottom: "pvp_ankle2"
-  top: "accuracy_feet"
 }
 
 ## knee########################################################
@@ -1601,34 +1594,12 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_knee"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_knee"
-  bottom: "pvp_knee2"
-  bottom: "pvp_knee2_wts"
-  top: "loss_knee"
-  loss_weight: 18.1
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
+
 layer {
         bottom: "mil_cls_score_knee"
         top: "predict_knee"
         name: "predict_knee"
         type: "Sigmoid"
-}
-layer {
-  name: "accuracy_knee"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_knee"
-  bottom: "pvp_knee2"
-  top: "accuracy_knee"
 }
 
 ## hip######################################################
@@ -1762,35 +1733,14 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_hip"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_hip"
-  bottom: "pvp_hip"
-  bottom: "pvp_hip_wts"
-  top: "loss_hip"
-  loss_weight: 6.8
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
+
 layer {
         bottom: "mil_cls_score_hip"
         top: "predict_hip"
         name: "predict_hip"
         type: "Sigmoid"
 }
-layer {
-  name: "accuracy_hip"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_hip"
-  bottom: "pvp_hip"
-  top: "accuracy_hip"
-}
+
 
 ## hand#######################################################
 layer {
@@ -1924,35 +1874,14 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_hand"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_hand"
-  bottom: "pvp_hand2"
-  bottom: "pvp_hand2_wts"
-  top: "loss_hand"
-  loss_weight: 10.9
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
+
 layer {
         bottom: "mil_cls_score_hand"
         top: "predict_hand"
         name: "predict_hand"
         type: "Sigmoid"
 }
-layer {
-  name: "accuracy_hand"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_hand"
-  bottom: "pvp_hand2"
-  top: "accuracy_hand"
-}
+
 
 ## shoulder#######################################################
 layer {
@@ -2086,34 +2015,12 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_shoulder"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_shoulder"
-  bottom: "pvp_shoulder2"
-  bottom: "pvp_shoulder2_wts"
-  top: "loss_shoulder"
-  loss_weight: 18.9
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
+
 layer {
         bottom: "mil_cls_score_shoulder"
         top: "predict_shoulder"
         name: "predict_shoulder"
         type: "Sigmoid"
-}
-layer {
-  name: "accuracy_shoulder"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_shoulder"
-  bottom: "pvp_shoulder2"
-  top: "accuracy_shoulder"
 }
 
 ## head#######################################################
@@ -2247,35 +2154,14 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_head"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_head"
-  bottom: "pvp_head"
-  bottom: "pvp_head_wts"
-  top: "loss_head"
-  loss_weight: 8.4
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
+
 layer {
         bottom: "mil_cls_score_head"
         top: "predict_head"
         name: "predict_head"
         type: "Sigmoid"
 }
-layer {
-  name: "accuracy_head"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_head"
-  bottom: "pvp_head"
-  top: "accuracy_head"
-}
+
 ##################################################language
 ###### slice (1, 55, 2304) to (1, 55, 1536)
 layer {
@@ -2397,7 +2283,7 @@ layer {
     axis: 1
   }
 }
-############################################
+
 layer {
     name: "reshape_pvp"
     type: "Reshape"
@@ -2537,40 +2423,11 @@ layer {
     }
   }
 }
-layer {
-  name: "loss_language_600"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "language_600"
-  bottom: "label"
-  bottom: "label_wts"
-  top: "loss_language_600"
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
-layer {
-        bottom: "language_600"
-        top: "predict_language_600"
-        name: "predict_language_600"
-        type: "Sigmoid"
-}
-layer {
-  name: "accuracy_language_600"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_language_600"
-  bottom: "label"
-  top: "accuracy_language_600"
-}
 
 ###############fuse 10 parts + h + 4 rels + scene + 6 pvps
 layer {
   name: "part_pvp_all"
   type: "Concat"
-  #bottom: "fc7_pvp"    #ignore 4096
   bottom: "fc7_feet"
   bottom: "fc7_knee"
   bottom: "fc7_hip"
@@ -2616,34 +2473,7 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_pvp_all"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_pvp_all"
-  bottom: "label"
-  bottom: "label_wts"
-  top: "loss_pvp_all"
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
-layer {
-        bottom: "mil_cls_score_pvp_all"
-        top: "predict_pvp_all"
-        name: "predict_pvp_all"
-        type: "Sigmoid"
-}
-layer {
-  name: "accuracy_pvp_all"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_pvp_all"
-  bottom: "label"
-  top: "accuracy_pvp_all"
-}
+
 
 #####################################117v classifier########################
 # 512x6
@@ -2695,37 +2525,6 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_117v"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_117v"
-  bottom: "verb_list"
-  bottom: "verb_list_wts"
-  top: "loss_117v"
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
-layer {
-        bottom: "mil_cls_score_117v"
-        top: "predict_117v"
-        name: "predict_117v"
-        type: "Sigmoid"
-}
-layer {
-  name: "accuracy_117v"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_117v"
-  bottom: "verb_list"
-  top: "accuracy_117v"
-}
-
-
-
 
 layer {
   name: "roipairs"
@@ -3077,7 +2876,7 @@ layer {
   top: "dim_red_conv18_flatten"
   reshape_param {
   shape {
-    dim: 0
+    dim: 0 
     dim: 1 
     dim: -1
   }
@@ -3119,6 +2918,7 @@ layer {
     dim: 0
     dim: 1 
     dim: -1
+  }
 }
 }
 layer {
@@ -3599,8 +3399,8 @@ layer {
   top: "partroi1_attention_reshape"
   reshape_param {
     shape {
-      dim: 0
-      dim: -1
+      dim: 0  # copy the dimension from below
+      dim: -1 # infer it from the other dimensions
       dim: 7
       dim: 7 
     }
@@ -3851,7 +3651,7 @@ layer {
   top: "partroi19_attention_reshape"
   reshape_param {
     shape {
-      dim: 0 
+      dim: 0
       dim: -1
       dim: 7
       dim: 7 
@@ -3893,7 +3693,7 @@ layer {
   top: "partroi22_attention_reshape"
   reshape_param {
     shape {
-      dim: 0 
+      dim: 0
       dim: -1
       dim: 7
       dim: 7 
@@ -4048,7 +3848,7 @@ layer {
   bottom: 'part_attention30'
   top: "slicer_attention_vec"
   concat_param {
-    axis: 1
+    axis: 1 # channels
   }
 }
 
@@ -4243,7 +4043,7 @@ layer {
     decay_mult: 0
   }
   param {
-    lr_mult: 0   
+    lr_mult: 0
     decay_mult: 0
   }
   inner_product_param {
@@ -4267,36 +4067,6 @@ layer {
     context_per_roi: 3
   }
 }
-layer {
-  name: "loss_pairs"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score"
-  bottom: "label"
-  bottom: "label_wts"
-  top: "loss_pairs"
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
-
-layer {
-        bottom: "mil_cls_score"
-        top: "predict"
-        name: "predict"
-        type: "Sigmoid"
-}
-
-layer {
-  name: "accuracy"
-  type: "MultiLabelAccuracy"
-  bottom: "predict"
-  bottom: "label"
-  top: "accuracy"
-}
 
 ############################################# second stream predictions #################################################
 layer {
@@ -4310,7 +4080,7 @@ layer {
   bottom: "sceneroi_pool5"
   top: "dim_red_feats2"
   concat_param {
-    axis: 1 
+    axis: 1
   }
 }
 
@@ -4391,11 +4161,11 @@ layer {
   bottom: "fc7_stream2"
   top: "cls_score_stream2"
   param {
-    lr_mult: 0   
+    lr_mult: 0
     decay_mult: 0
   }
   param {
-    lr_mult: 0   
+    lr_mult: 0
     decay_mult: 0
   }
   inner_product_param {
@@ -4418,34 +4188,4 @@ layer {
   mil_param {
     context_per_roi: 3
   }
-}
-layer {
-  name: "loss_stream2"
-  type: "SigmoidCrossEntropyLoss"
-  bottom: "mil_cls_score_stream2"
-  bottom: "label"
-  bottom: "label_wts"
-  top: "loss_new"
-  loss_param: {
-     ignore_label: -1
-     weight_positive: 10
-  }
-  include {
-    phase: TRAIN
-  }
-}
-
-layer {
-        bottom: "mil_cls_score_stream2"
-        top: "predict_stream2"
-        name: "predict_stream2"
-        type: "Sigmoid"
-}
-
-layer {
-  name: "accuracy_stream2"
-  type: "MultiLabelAccuracy"
-  bottom: "predict_stream2"
-  bottom: "label"
-  top: "accuracy_stream2"
 }

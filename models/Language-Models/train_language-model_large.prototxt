@@ -45,9 +45,9 @@ layer {
  ####################### detection object list (1, 80)
   top: 'det_object_list'
   python_param {
-    module: 'HOI_data_layer-language'
+    module: 'HOI_data_layer-language_large'
     layer: 'HOIDataLayer'
-    param_str: '{"batch_size":1,"max_size":640, "root":"./data/hico/","list_file":"./data/hico/train_filelist.txt"}'
+    param_str: '{"batch_size":1,"max_size":640, "root":"./data/hico/","list_file":"./data/hico/train_filelist_large.txt"}'
   }
   include {
     phase: TRAIN
@@ -100,7 +100,7 @@ layer {
  ####################### detection object list (1, 80)
   top: 'det_object_list'
   python_param {
-    module: 'HOI_data_layer-language'
+    module: 'HOI_data_layer-language_large'
     layer: 'HOIDataLayer'
     param_str: '{"batch_size":1,"max_size":640,"root":"./data/hico/","list_file":"./data/hico/test_filelist.txt"}'
   }
@@ -1447,7 +1447,7 @@ layer {
   bottom: "pvp_ankle2"
   bottom: "pvp_ankle2_wts"
   top: "loss_feet"
-  loss_weight: 14.5
+  loss_weight: 12.4
   loss_param: {
      ignore_label: -1
      weight_positive: 10
@@ -1608,7 +1608,7 @@ layer {
   bottom: "pvp_knee2"
   bottom: "pvp_knee2_wts"
   top: "loss_knee"
-  loss_weight: 18.1
+  loss_weight: 16.7
   loss_param: {
      ignore_label: -1
      weight_positive: 10
@@ -1769,7 +1769,7 @@ layer {
   bottom: "pvp_hip"
   bottom: "pvp_hip_wts"
   top: "loss_hip"
-  loss_weight: 6.8
+  loss_weight: 9.7
   loss_param: {
      ignore_label: -1
      weight_positive: 10
@@ -1931,7 +1931,7 @@ layer {
   bottom: "pvp_hand2"
   bottom: "pvp_hand2_wts"
   top: "loss_hand"
-  loss_weight: 10.9
+  loss_weight: 4.2
   loss_param: {
      ignore_label: -1
      weight_positive: 10
@@ -2093,7 +2093,7 @@ layer {
   bottom: "pvp_shoulder2"
   bottom: "pvp_shoulder2_wts"
   top: "loss_shoulder"
-  loss_weight: 18.9
+  loss_weight: 19.9
   loss_param: {
      ignore_label: -1
      weight_positive: 10
@@ -2254,7 +2254,7 @@ layer {
   bottom: "pvp_head"
   bottom: "pvp_head_wts"
   top: "loss_head"
-  loss_weight: 8.4
+  loss_weight: 13.3
   loss_param: {
      ignore_label: -1
      weight_positive: 10
