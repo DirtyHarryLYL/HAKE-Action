@@ -15,10 +15,10 @@ caffe.set_device(0)
 
 # model_name: 10v or pvp
 # res_name: linear/mlp/...
-def test_one_caffemodel(deploy_file, caffemodel, res_dir, mode, res_name)
+def test_one_caffemodel(deploy_file, caffemodel, res_dir, mode, res_name):
 
     if not os.path.exists(res_dir):
-        if mode == 'pvp' or model == '10v':
+        if mode == 'pvp' or mode == '10v':
             os.makedirs(res_dir)      
         else:
             assert 0,"mode != '10v' or 'pvp'"
