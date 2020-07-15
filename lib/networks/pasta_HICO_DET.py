@@ -287,7 +287,7 @@ class ResNet50():
         self.predictions["cls_prob_vec"]   = cls_prob_vec
         return
 
-    def vec_attention(self, cls_prob_vec, fc5_P0, fc5_P1, fc5_P2, fc5_P3, fc5_P4, fc5_P5, fc5_O, initializer, is_training, name):
+    def vec_attention(self, cls_prob_vec, fc7_P0, fc7_P1, fc7_P2, fc7_P3, fc7_P4, fc7_P5, fc5_O, initializer, is_training, name):
         with tf.variable_scope(name) as scope:
             fc5_P0 = tf.multiply(fc5_P0, (cls_prob_vec[:, 0:1]+cls_prob_vec[:, 3:4])/2)
             fc5_P1 = tf.multiply(fc5_P1, (cls_prob_vec[:, 1:2]+cls_prob_vec[:, 2:3])/2)
