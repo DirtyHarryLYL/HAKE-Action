@@ -23,3 +23,6 @@ python script/Download_data.py 1_O8eo1fmJtVzb_W5Y4emg_eE7LTJKPGR Results.tar.gz
 python script/Download_data.py 1_ubvIeBVIBT2-M0taN4ytf72B5xx0JR7 lib/ult/matrix_sentence_76.py
 
 ln -s ./-Results/HICO_DET_utils.py ./lib/ult/HICO_DET_utils.py
+
+python script/Download_data.py 1B85uNXBjFCAfS5UPNQY-T2xPTA9KRbIQ Data/Trainval_GT_10w.pkl
+python script/Download_data.py 11n-UvjIH1hmoTaEPyDfBqoSxnqbgVs-L Data/Trainval_Neg_10w.pkl
