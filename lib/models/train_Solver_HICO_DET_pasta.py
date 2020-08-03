@@ -3,7 +3,7 @@ from __future__ import division
 from __future__ import print_function
 
 from ult.config import cfg
-from ult.ult_HICO_DET import Get_Next_Instance_HO_HICO_DET_for_only_PVP
+from ult.ult_HICO_DET import Get_Next_Instance_HO_HICO_DET_for_only_PVP, Get_Next_Instance_HO_HICO_DET_for_10w
 from ult.timer import Timer
 
 import cPickle as pickle
@@ -224,8 +224,10 @@ class SolverWrapper(object):
                 np.random.shuffle(idx)
             
             image_id = keys[idx[iter % Data_length]]
-
-            blobs = Get_Next_Instance_HO_HICO_DET_for_only_PVP(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
+            if len(self.Trainval_GT) > 50000:
+                blobs = Get_Next_Instance_HO_HICO_DET_for_only_PVP(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
+            else:
+                blobs = Get_Next_Instance_HO_HICO_DET_for_10w(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
 
             if (iter % cfg.TRAIN.SUMMARY_INTERVAL == 0) or (iter < 20):
                 # Compute the graph with summary
