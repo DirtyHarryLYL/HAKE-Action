@@ -224,7 +224,7 @@ class SolverWrapper(object):
                 np.random.shuffle(idx)
             
             image_id = keys[idx[iter % Data_length]]
-            if len(self.Trainval_GT) > 50000:
+            if len(self.Trainval_GT) < 50000:
                 blobs = Get_Next_Instance_HO_HICO_DET_for_only_PVP(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
             else:
                 blobs = Get_Next_Instance_HO_HICO_DET_for_10w(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
