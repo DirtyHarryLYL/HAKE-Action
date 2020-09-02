@@ -227,6 +227,8 @@ class SolverWrapper(object):
             if len(self.Trainval_GT) < 50000:
                 blobs = Get_Next_Instance_HO_HICO_DET_for_only_PVP(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
             else:
+                if 'HICO_test' in image_id: # Eliminate test image
+                    continue
                 blobs = Get_Next_Instance_HO_HICO_DET_for_10w(self.Trainval_GT, self.Trainval_N, image_id, self.Pos_augment, self.Neg_select)
 
             if (iter % cfg.TRAIN.SUMMARY_INTERVAL == 0) or (iter < 20):
