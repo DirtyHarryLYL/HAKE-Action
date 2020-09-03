@@ -44,7 +44,7 @@ def parse_args():
     parser.add_argument('--train_module', dest='train_module',
             help='How to compute loss',
             default=cfg.TRAIN_MODULE, type=int)
-    parser.add_argument('--data', dest='--data',
+    parser.add_argument('--data', dest='data',
             help='which data to choose',
             default=0, type=int)
     args = parser.parse_args()
