@@ -212,7 +212,7 @@ class ResNet50():
                                                weights_initializer=initializer,
                                                trainable=is_training,
                                                activation_fn=None)
-            cls_prob_P   = tf.nn.sigmoid(cls_score_P) 
+            cls_prob_P   = tf.nn.sigmoid(cls_score_P)
             tf.reshape(cls_prob_P, [1, num_state])
 
         return cls_score_P, cls_prob_P, fc7_P
@@ -289,16 +289,16 @@ class ResNet50():
 
     def vec_attention(self, cls_prob_vec, fc7_P0, fc7_P1, fc7_P2, fc7_P3, fc7_P4, fc7_P5, fc5_O, initializer, is_training, name):
         with tf.variable_scope(name) as scope:
-            fc5_P0 = tf.multiply(fc5_P0, (cls_prob_vec[:, 0:1]+cls_prob_vec[:, 3:4])/2)
-            fc5_P1 = tf.multiply(fc5_P1, (cls_prob_vec[:, 1:2]+cls_prob_vec[:, 2:3])/2)
-            fc5_P2 = tf.multiply(fc5_P2, cls_prob_vec[:, 4:5])
-            fc5_P3 = tf.multiply(fc5_P3, (cls_prob_vec[:, 6:7]+cls_prob_vec[:, 9:10])/2)
-            fc5_P4 = tf.multiply(fc5_P4, (cls_prob_vec[:, 7:8]+cls_prob_vec[:, 8:9])/2)
-            fc5_P5 = tf.multiply(fc5_P5, cls_prob_vec[:, 5:6])
+            fc7_P0 = tf.multiply(fc7_P0, (cls_prob_vec[:, 0:1]+cls_prob_vec[:, 3:4])/2)
+            fc7_P1 = tf.multiply(fc7_P1, (cls_prob_vec[:, 1:2]+cls_prob_vec[:, 2:3])/2)
+            fc7_P2 = tf.multiply(fc7_P2, cls_prob_vec[:, 4:5])
+            fc7_P3 = tf.multiply(fc7_P3, (cls_prob_vec[:, 6:7]+cls_prob_vec[:, 9:10])/2)
+            fc7_P4 = tf.multiply(fc7_P4, (cls_prob_vec[:, 7:8]+cls_prob_vec[:, 8:9])/2)
+            fc7_P5 = tf.multiply(fc7_P5, cls_prob_vec[:, 5:6])
             
-            fc5_P_att = tf.concat([fc5_P0, fc5_P1, fc5_P2, fc5_P3, fc5_P4, fc5_P5, fc5_O], axis=1)
+            fc7_P_att = tf.concat([fc7_P0, fc7_P1, fc7_P2, fc7_P3, fc7_P4, fc7_P5, fc5_O], axis=1)
             
-            fc7_P_att       = slim.fully_connected(fc5_P_att, 4096, weights_initializer=initializer, trainable=is_training)
+            fc7_P_att       = slim.fully_connected(fc7_P_att, 4096, weights_initializer=initializer, trainable=is_training)
             fc7_P_att       = slim.dropout(fc7_P_att, keep_prob=0.5, is_training=is_training)
 
         return fc7_P_att
