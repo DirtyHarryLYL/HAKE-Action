@@ -18,6 +18,7 @@ python script/Download_data.py 1hkakTuYB_3C4GCbZgSm2pH7AHbhmEr5y Data/ava_train_
 python script/Download_data.py 1cYR2rI8H78sY7exv-L3HXYhXqp7HQdUU Data/ava_val_fixed.pkl
 
 mkdir Weights/
+
 python script/Download_data.py 1ew-uIrD_ZFmO5RFsuMV2sBEqWWVtXkHH Weights/pasta_full.zip
 python script/Download_data.py 1h0InSjxCffLuyoXEPbLIzOH0KVWUuUJc Weights/pasta_AVA.zip
 python script/Download_data.py 1l12Dr217NeTnbBA5e-9lLetMFmDv7eI9 Weights/pasta_HICO-DET.zip
@@ -28,3 +29,7 @@ ln -s ./-Results/HICO_DET_utils.py ./lib/ult/HICO_DET_utils.py
 
 python script/Download_data.py 1B85uNXBjFCAfS5UPNQY-T2xPTA9KRbIQ Data/Trainval_GT_10w.pkl
 python script/Download_data.py 11n-UvjIH1hmoTaEPyDfBqoSxnqbgVs-L Data/Trainval_Neg_10w.pkl
+
+python script/Download_data.py 1IbR4kiWgLF8seaKjOMmwaHs0Bfwl5Dq1 Weights/res50_faster_rcnn_iter_1190000.ckpt.data-00000-of-00001
+python script/Download_data.py 1-DbfEloN4c2JaCEMnexaWAsSc4MDlZJx Weights/res50_faster_rcnn_iter_1190000.ckpt.index
+python script/Download_data.py 1vc5d3OwCtMtRgXq3Pj4_twpK4x3kjgT0 Weights/res50_faster_rcnn_iter_1190000.ckpt.meta
