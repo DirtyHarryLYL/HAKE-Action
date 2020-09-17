@@ -3119,6 +3119,7 @@ layer {
     dim: 0
     dim: 1 
     dim: -1
+  }
 }
 }
 layer {
