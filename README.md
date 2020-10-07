@@ -97,6 +97,12 @@ If you find our work useful, please consider citing:
   booktitle={CVPR},
   year={2019}
 }
+@inproceedings{lu2018beyond,
+  title={Beyond holistic object recognition: Enriching image understanding with part states},
+  author={Lu, Cewu and Su, Hao and Li, Yonglu and Lu, Yongyi and Yi, Li and Tang, Chi-Keung and Guibas, Leonidas J},
+  booktitle={CVPR},
+  year={2018}
+}
 ```
 
 ## [HAKE](http://hake-mvig.cn/home/)
