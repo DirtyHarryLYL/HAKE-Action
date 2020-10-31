@@ -1,5 +1,14 @@
 import numpy as np
+import json
 
+def restruct_pose(train_pose):
+    pose = {}
+    for item in train_pose:
+        key = item['image_id']
+        if key not in pose:
+            pose[key] = []
+        pose[key].append([item['bboxes'], item['keypoints']])
+    return pose
 
 def map_17_to_16(joint_17):
     joint_16 = np.zeros((16, 3), dtype=np.float32)
@@ -170,8 +179,27 @@ def check_iou(human_bbox_pkl, human_bbox_pose):
         return 0
 
 # Given the human bounding box and the corresponding human pose, Generate the correponding part box
-
+data = pickle.load(open('toy.pkl', 'rb'))
+pose = restruct_pose(json.load(open('toy_pose.json')))
 hbox = np.zeros((4))
 joint_17 = np.zeros((17, 3))                # the pose
 joint_16 = map_17_to_16(joint_17)
 part_box = output_part_box(joint_16, hbox)) # return the part bounding box
+for key, value in data.items():
+    for item in value:
+        k, miou, hbox = -1, 0.0, item[2]
+        for idx in range(len(pose[key])):
+            iou = check_iou(hbox, pose[key][idx][0])
+            if iou > miou:
+                miou = iou
+                k    = idx
+        if k != -1 and miou > 0.7:
+            item.append(pose[key][k][1])
+            joint_17 = np.array(pose[key][k][1]).reshape(17, 3)
+            joint_16 = map_17_to_16(joint_17)
+            item.append(output_part_box(joint_16, hbox))
+        else:
+            item.append(None)
+            item.append(None)
+
+pickle.dump(data, open('toy_with_part.pkl', 'wb'))
