@@ -532,6 +532,6 @@ class ResNet50():
         feed_dict = {self.image: image, 
                      self.H_boxes: blobs['H_boxes'], self.P_boxes: blobs['P_boxes'], self.R_boxes: blobs['R_boxes'], self.O_boxes: blobs['O_boxes'], 
                      self.H_num: blobs['H_num'], self.gt_object: blobs['gt_object'], }
-        predictions = sess.run([self.predictions["cls_prob_P"], self.predictions["cls_prob_A"], self.predictions["cls_score_L"]], feed_dict=feed_dict)
+        predictions = sess.run([self.predictions["cls_score_P"], self.predictions["cls_score_A"], self.predictions["cls_score_L"]], feed_dict=feed_dict)
 
         return predictions
