@@ -148,7 +148,8 @@ def output_part_box(joint, img_bbox):
                     bbox[i]['x1'], bbox[i]['y1'], bbox[i]['x2'], bbox[i]['y2'] = get_part_box(i, joint, half_box_width)
                 else:
                     bbox[i]['x1'], bbox[i]['y1'], bbox[i]['x2'], bbox[i]['y2'] = return_image_box(img_bbox)
-            elif i in [9,10]: # left arm group
+            # elif i in [9,10]: # left arm group
+            elif i in [8,9]: # left arm group
                 if group_score_left_arm > 0.2: 
                     half_box_width = get_distance(joint, 13, 15)
                     bbox[i]['x1'], bbox[i]['y1'], bbox[i]['x2'], bbox[i]['y2'] = get_part_box(i, joint, half_box_width)
@@ -160,7 +161,7 @@ def output_part_box(joint, img_bbox):
                     bbox[i]['x1'], bbox[i]['y1'], bbox[i]['x2'], bbox[i]['y2'] = get_part_box(i, joint, half_box_width)
                 else:
                     bbox[i]['x1'], bbox[i]['y1'], bbox[i]['x2'], bbox[i]['y2'] = return_image_box(img_bbox)
-            elif i in [2,3]: # right arm group
+            elif i in [2,3]: # left leg group
                 if group_score_left_leg > 0.2: 
                     half_box_width = get_distance(joint, 3, 5)
                     bbox[i]['x1'], bbox[i]['y1'], bbox[i]['x2'], bbox[i]['y2'] = get_part_box(i, joint, half_box_width)
