@@ -117,7 +117,7 @@ def output_part_box(joint, img_bbox):
                     bbox[i, 1] = img_bbox[1]
                     bbox[i, 2] = img_bbox[2]
                     bbox[i, 3] = img_bbox[3]
-            elif i in [2,3]: # right arm group
+            elif i in [2,3]: # left leg group
                 if group_score_left_leg > 0.2: 
                     half_box_width = get_distance(joint, 3, 5)
                     pbox = get_part_box(i, joint, half_box_width)
