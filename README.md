@@ -2,7 +2,12 @@
 HAKE-Action (TensorFlow) is a project to open the SOTA action understanding studies based on our [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes reproduced SOTA models and their HAKE-enhanced versions.
 HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, Liang Xu, Cewu Lu. Currently, it is manintained by Yong-Lu Li, Xinpeng Liu and Liang Xu.
 
-#### **News**: (2021.1.15) Our extended version of [TIN (Transferable Interactiveness Network)](https://arxiv.org/abs/2101.10292) is accepted by TPAMI! New paper and code will be released soon.
+#### **News**: (2021.2.7) Upgraded [HAKE-Activity2Vec](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/Activity2Vec) is released! Images/Videos --> human box + ID + skeleton + part states + action + representation. An offical demo is coming soon.
+<p align='center'>
+    <img src="https://github.com/DirtyHarryLYL/HAKE-Action-Torch/blob/Activity2Vec/demo/a2v-demo.gif", height="400">
+</p>
+
+(2021.1.15) Our extended version of [TIN (Transferable Interactiveness Network)](https://arxiv.org/abs/2101.10292) is accepted by TPAMI! New paper and code will be released soon.
 
 (2020.10.27) The code of [IDN](https://github.com/DirtyHarryLYL/HAKE-Action-Torch/tree/IDN-(Integrating-Decomposing-Network)) ([Paper](https://arxiv.org/abs/2010.16219)) in NeurIPS'20 is released!
 
@@ -11,8 +16,8 @@ HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpe
 **We released the HAKE-HICO (image-level part state labels upon HICO) and HAKE-HICO-DET (instance-level part state labels upon HICO-DET). The corresponding data can be found here: [HAKE Data](https://github.com/DirtyHarryLYL/HAKE).**
 
 - Paper is [here](https://arxiv.org/abs/2004.00945). 
-- We are enriching the data and part states on more data and activities (e.g., upon AVA, more kinds of action categories, more rare actions, etc.). 
-- We will keep updating our HAKE-Action model zoo to include more SOTA models and their HAKE-enhanced versions.
+- More data and part states (e.g., upon AVA, more kinds of action categories, more rare actions...) are coming.
+- We will keep updating HAKE-Action to include more SOTA models and their HAKE-enhanced versions.
 
 ## [Data Mode](https://github.com/DirtyHarryLYL/HAKE)
 - **HAKE-HICO** (**PaStaNet\* mode** in [paper](https://arxiv.org/abs/2004.00945)): image-level, add the aggression of all part states in an image (belong to one or multiple active persons), compared with original [HICO](http://www-personal.umich.edu/~ywchao/hico/), the only additional labels are image-level human body part states.
