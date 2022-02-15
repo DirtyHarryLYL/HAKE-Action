@@ -2,7 +2,7 @@
 HAKE-Action (TensorFlow) is a project to open the SOTA action understanding studies based on our [Human Activity Knowledge Engine](http://hake-mvig.cn/home/). It includes reproduced SOTA models and their HAKE-enhanced versions.
 HAKE-Action is authored by [Yong-Lu Li](https://dirtyharrylyl.github.io/), Xinpeng Liu, Liang Xu, Cewu Lu. Currently, it is manintained by Yong-Lu Li, Xinpeng Liu and Liang Xu.
 
-#### **News**: (2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA).
+#### **News**: (2022.02.14) We release the human body part state labels based on AVA: [HAKE-AVA](https://github.com/DirtyHarryLYL/HAKE-AVA) and [HAKE 2.0 paper](https://arxiv.org/abs/2202.06851).
 
 (2021.10.06) Our extended version of [SymNet](https://github.com/DirtyHarryLYL/SymNet) is accepted by TPAMI! Paper and code are coming soon.
 
@@ -100,6 +100,14 @@ Here, HAKE works like the ImageNet and Activity2Vec is used as a pre-trained kno
 ## Citation
 If you find our work useful, please consider citing:
 ```
+@misc{li2022hake,
+  title={HAKE: A Knowledge Engine Foundation for Human Activity Understanding}, 
+  author={Yong-Lu Li and Xinpeng Liu and Xiaoqian Wu and Yizhuo Li and Zuoyu Qiu and Liang Xu and Yue Xu and Hao-Shu Fang and Cewu Lu},
+  year={2022},
+  eprint={2202.06851},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV}
+}
 @inproceedings{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
   author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-Shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
