@@ -106,12 +106,12 @@ Here, HAKE works like the ImageNet and Activity2Vec is used as a pre-trained kno
 ## Citation
 If you find our work useful, please consider citing:
 ```
-@article{li2022hake,
+    @article{li2023hake,
      title={HAKE: A Knowledge Engine Foundation for Human Activity Understanding},
     author={Li, Yong-Lu and Liu, Xinpeng and Wu, Xiaoqian and Li, Yizhuo and Qiu, Zuoyu and Xu, Liang and Xu, Yue and Fang, Hao-Shu and Lu, Cewu},
     journal={TPAMI},
-    year={2022}
-}
+    year={2023}
+    }
 @inproceedings{li2020pastanet,
   title={PaStaNet: Toward Human Activity Knowledge Engine},
   author={Li, Yong-Lu and Xu, Liang and Liu, Xinpeng and Huang, Xijie and Xu, Yue and Wang, Shiyi and Fang, Hao-Shu and Ma, Ze and Chen, Mingyang and Lu, Cewu},
